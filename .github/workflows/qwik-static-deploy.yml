@@ -19,18 +19,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - run: corepack enable
       - name: Install Node.js
+      - run: corepack enable
         uses: actions/setup-node@v3
         with:
           node-version: 16.15.0
-          cache: pnpm
+          cache: npm
+          # cache-dependecy-path: './package.json'
 
       - name: Install dependencies
-        run: pnpm i
+        run: npm i
 
       - name: Build
-        run: pnpm run build
+        run: npm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v2
