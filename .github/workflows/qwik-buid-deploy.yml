@@ -27,10 +27,10 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: npm i
+        run: pnpm i
 
       - name: Build
-        run: npm run build
+        run: pnpm run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v2
