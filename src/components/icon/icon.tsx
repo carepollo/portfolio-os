@@ -1,6 +1,6 @@
 import { component$, useStylesScoped$ } from "@builder.io/qwik"
 import { IconProps } from "~/models/icon-props";
-import styles from './icon.css?inline';
+import styles from './icon.scss?inline';
 
 export default component$((props: IconProps) => {
   useStylesScoped$(styles);

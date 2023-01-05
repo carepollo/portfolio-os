@@ -1,7 +1,7 @@
 import { component$, useSignal, useStylesScoped$ } from "@builder.io/qwik";
 import Icon from "../icon/icon";
 import { ExecutableIconProps } from "~/models/executable-icon.props";
-import styles from './barmenu-icon.css?inline';
+import styles from './barmenu-icon.scss?inline';
 
 export default component$((props: ExecutableIconProps) => {
     useStylesScoped$(styles);
