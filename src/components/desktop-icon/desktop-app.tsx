@@ -1,9 +1,9 @@
 import { component$, useSignal, useStylesScoped$ } from "@builder.io/qwik";
-import { ExecutableIconProps } from "~/models/executable-icon.props";
+import { DesktopAppProps } from "~/models/desktop-app.props";
 import Icon from "../icon/icon";
-import styles from './desktop-icon.scss?inline';
+import styles from './desktop-app.scss?inline';
 
-export default component$((props: ExecutableIconProps) => {
+export default component$((props: DesktopAppProps) => {
     useStylesScoped$(styles);
     const isBeingOpened = useSignal(false);
 
@@ -19,4 +19,4 @@ export default component$((props: ExecutableIconProps) => {
             </div>
         </>
     )
-})
+});

@@ -1,6 +1,6 @@
 import { component$, useStylesScoped$ } from '@builder.io/qwik';
 import styles from './header.scss?inline';
-import BarmenuIcon from '../barmenu-icon/barmenu-icon';
+import BarmenuIcon from '../barmenu-icon/barmenu-app';
 
 export default component$(() => {
   useStylesScoped$(styles);
