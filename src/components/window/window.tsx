@@ -1,52 +1,34 @@
-import { $, QwikMouseEvent, component$, useStore, useStylesScoped$ } from "@builder.io/qwik";
+import { $, component$, useStore, useStylesScoped$ } from "@builder.io/qwik";
 import style from './window.scss?inline';
-import { WindowProps } from "~/models/window.configs";
+import { WindowProps, WindowStore } from "~/models/window.configs";
 import Icon from '~/components/icon/icon';
 
 export default component$((props: WindowProps<unknown>) => {
     useStylesScoped$(style);
-    const store = useStore({
-        x: 50,
-        y: 50,
+    const store = useStore<WindowStore>({
+        x: 100,
+        y: 300,
         dragging: false,
         minimized: false,
         maximized: false,
         closed: false,
     });
     
-    const drag = $((event: QwikMouseEvent<HTMLDivElement, MouseEvent>) => {
+    const drag = $(() => {
         if (store.maximized) {
-            store.maximized = !store.maximized
+            store.maximized = false;
         }
         
-        const element = (event.target as HTMLElement).closest('.window');
-        if (element !== null) {
-            store.dragging = true;
-            store.x = event.clientX - element.getBoundingClientRect().left;
-            store.y = event.clientY - element.getBoundingClientRect().top;
-            
-            console.log(
-                event.clientX,
-                event.pageX,
-                event.x,
-                event.screenX,
-                event.movementX,
-            );
-            
-        }
+        store.dragging = true;
     });
-
-    const move = $((event: QwikMouseEvent<HTMLDivElement, MouseEvent>) => {
-        if(store.dragging) {
-            store.x = event.clientX - store.x;
-            store.y = event.clientY - store.y;
-        }
-    });
-    
 
     const minimize = $(() => store.minimized = !store.minimized);
 
-    const resize = $(() => store.maximized = !store.maximized);
+    const resize = $(() => {
+        store.x = 0;
+        store.y = 0;
+        store.maximized = !store.maximized;
+    });
 
     const close = $(() => store.closed = true);
 
@@ -54,8 +36,6 @@ export default component$((props: WindowProps<unknown>) => {
 
     return (
         <>
-            {/* {store.closed ? null : store.closed} */}
-
             <div 
                 class="window" 
                 style={{
@@ -66,10 +46,15 @@ export default component$((props: WindowProps<unknown>) => {
                 }}
             >
                 <div class="header"
-                    onMouseDown$={(e) => drag(e)}
-                    onMouseMove$={(e) => move(e)}
+                    onMouseDown$={drag}
+                    onMouseMove$={(event) => {
+                        if(store.dragging) {
+                            store.x = store.x + event.movementX;
+                            store.y = store.y + event.movementY;
+                        }
+                    }}
                     onMouseUp$={() => drop()}
-                    // onMouseLeave$={() => drop()}
+                    onMouseLeave$={() => drop()}
                 >
                     <div class="title">
                         <Icon icon={props.icon} size={20} />
@@ -90,14 +75,17 @@ export default component$((props: WindowProps<unknown>) => {
                     </div>
                 </div>
                 <div class="body">
+                    
                     <p>
-                    <b>
-                        Why do we use it?
-                    </b>
+                        <b>
+                            Why do we use it?
+                        </b>
                         It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
                     </p>
                 </div>
             </div>
+
+            {store.closed ? null : store.closed}
         </>
     )
 });

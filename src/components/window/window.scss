@@ -16,6 +16,7 @@
         background-color: #E1DFE1;
         height: 9%;
         padding: 0px 3px;
+        cursor: move;
 
         .title {
             display: flex;
@@ -32,6 +33,7 @@
             padding: 2px 5px;
             z-index: 4;
             cursor: pointer;
+            // font-size: 10px;
         }
         .button:active {
             filter: grayscale(0.2);
