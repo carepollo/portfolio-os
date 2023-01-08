@@ -1,11 +1,17 @@
-import { component$, useSignal, useStylesScoped$ } from "@builder.io/qwik";
+import { $, component$, useContext, useSignal, useStylesScoped$ } from "@builder.io/qwik";
 import Icon from "../icon/icon";
-import { ExecutableIconProps } from "~/models/executable-icon.props";
 import styles from './barmenu-app.scss?inline';
+import { App } from "~/models/app";
+import { ExecutedAppsContext } from "~/root";
 
-export default component$((props: ExecutableIconProps) => {
+export default component$((props: App) => {
     useStylesScoped$(styles);
     const tooltipDisplay = useSignal(false);
+    const executingApps = useContext(ExecutedAppsContext);
+
+    const openApp = $(() => {
+        executingApps.apps = [...executingApps.apps, props];
+    });
     
     return (
         <>
@@ -13,15 +19,15 @@ export default component$((props: ExecutableIconProps) => {
                 class="container" 
                 onMouseOver$={() => tooltipDisplay.value = true}
                 onMouseOut$={() => tooltipDisplay.value = false}
-                onClick$={() => console.log('openining new tab')}
+                onClick$={openApp}
             >
                 <p 
                     class="tooltip" 
                     style={{display: tooltipDisplay.value ? 'block' : 'none'}}
                 >
-                    {props.title}
+                    {props.name}
                 </p>
-                <Icon icon={props.icon.icon} />
+                <Icon name={props.icon.name} />
             </div>
         </>
     )

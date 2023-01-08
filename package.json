@@ -1,5 +1,5 @@
 {
-  "name": "chickenface portfolio",
+  "name": "chickenface-portfolio",
   "description": "the portfolio web for chickenface",
   "engines": {
     "node": ">=15.0.0"

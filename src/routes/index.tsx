@@ -1,7 +1,7 @@
-import { component$ } from '@builder.io/qwik';
+import { component$, useContext } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
-
 import Window from '~/components/window/window';
+import { ExecutedAppsContext } from '~/root';
 
 /**
  * this is to configure the metadata of the head tag of the current route,
@@ -18,9 +18,14 @@ export const head: DocumentHead = {
 };
 
 export default component$(() => {
+  
+  const executingApps = useContext(ExecutedAppsContext);
+
   return (
-    <div>
-      <Window content={{}} title="test" icon="terminal.svg" />
-    </div>
+    <>
+      {executingApps.apps.map(app => (
+        <Window name={app.name} icon={app.icon} content={app.content} />
+      ))}
+    </>
   );
 });

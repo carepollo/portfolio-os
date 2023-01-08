@@ -1,5 +1,5 @@
 import { component$, useStylesScoped$ } from "@builder.io/qwik"
-import { IconProps } from "~/models/icon-props";
+import { IconProps } from "~/models/icon.props";
 import styles from './icon.scss?inline';
 
 export default component$((props: IconProps) => {
@@ -13,7 +13,7 @@ export default component$((props: IconProps) => {
   return (
     <>
       <img 
-        src={props.icon} 
+        src={props.name} 
         alt="icon" 
         style={{
           width: size,
