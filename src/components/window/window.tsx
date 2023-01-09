@@ -8,17 +8,13 @@ import ViewNotexist from "../view-notexist/view-notexist";
 export default component$((props: App) => {
     useStylesScoped$(style);
 
-    const _removeFromArray = $((array: unknown[], deleted: unknown) => {
-        const index = array.indexOf(deleted);
-        if (index !== -1) {
-            array.splice(index, 1);
-        }
-        console.log(array);
-    });
-
     const executedAppsState = useContext(ExecutedAppsContext);
 
     const openedAppsState = useContext(OpenedAppsContext);
+
+    const _removeFromArray = $((array: App[], deleted: App) => {
+        array.filter(app => app.id !== deleted.id);
+    });
 
     const store = useStore({
         x: 0,
@@ -39,7 +35,7 @@ export default component$((props: App) => {
 
     const minimize = $(() => {
         store.minimized = !store.minimized;
-        openedAppsState.apps.push(props);
+        openedAppsState.apps = [...openedAppsState.apps, props];
         _removeFromArray(executedAppsState.apps, props);
     });
 

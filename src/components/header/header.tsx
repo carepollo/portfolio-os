@@ -13,8 +13,8 @@ export default component$(() => {
 
   return (
     <header>
-      {state.apps.map((app, index) => (
-        <BarmenuIcon icon={app.icon} name={app.name} content={app.content} key={index} />
+      {state.apps.map(app => (
+        <BarmenuIcon icon={app.icon} name={app.name} content={app.content} key={app.id} />
       ))}
     </header>
   );

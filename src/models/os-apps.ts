@@ -9,5 +9,4 @@ export interface OSApps {
      */
     apps: App[];
 
-    count: number;
 }

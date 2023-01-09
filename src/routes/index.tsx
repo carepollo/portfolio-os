@@ -12,7 +12,7 @@ export const head: DocumentHead = {
   meta: [
     {
       name: 'Home',
-      content: 'Personal site to show off who I am and what I can do',
+      content: 'Personal site to show stuff about ChickenFace',
     },
   ],
 };
@@ -24,7 +24,7 @@ export default component$(() => {
   return (
     <>
       {executingApps.apps.map(app => (
-        <Window name={app.name} icon={app.icon} content={app.content} />
+        <Window name={app.name} icon={app.icon} content={app.content} key={app.id} />
       ))}
     </>
   );

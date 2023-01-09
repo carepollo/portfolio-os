@@ -25,5 +25,10 @@ export interface App {
      *  content: $(() => <ChildComponent />), //wrap child component with qwik function
      * };
      */
-    content?: QRL<() => JSX.Element>;
+    content: QRL<() => JSX.Element>;
+
+    /**
+     * unique value to identify one app from another
+     */
+    id?: string;
 }

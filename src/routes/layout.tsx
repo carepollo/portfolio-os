@@ -1,16 +1,16 @@
 import { Slot, component$ } from '@builder.io/qwik';
 import Header from '../components/header/header';
 import DesktopIcon from '~/components/desktop-app/desktop-app';
+import { apps } from '~/root';
 
 export default component$(() => {
   return (
     <>
       <Slot />
       <section class="layout">
-        <DesktopIcon icon={{name: 'folder.svg'}} name='Introduction' />
-        <DesktopIcon icon={{name: 'terminal.svg'}} name='hangman' />
-        <DesktopIcon icon={{name: 'terminal.svg'}} name='esolang' />
-        {/* <DesktopIcon icon={{name: 'terminal.svg'}} name='Elevator Simulation' /> */}
+        {apps.map(app => (
+          <DesktopIcon icon={app.icon} name={app.name} content={app.content} key={app.id} />
+        ))}
       </section>
       <Header />
     </>

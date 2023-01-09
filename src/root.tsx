@@ -6,9 +6,39 @@ import globalStyles from './global.scss?inline';
 import { OSApps } from './models/os-apps';
 import ViewIntroduction from './components/view-introduction/view-introduction';
 import ViewContact from './components/view-contact/view-contact';
+import { App } from './models/app';
+import { Common } from './utilities/common';
 
 export const OpenedAppsContext = createContext<OSApps>('openedApps');
 export const ExecutedAppsContext = createContext<OSApps>('executedApps');
+
+export const apps: App[] = [
+  {
+    id: Common.generateId(),
+    name: 'Introduction',
+    icon: {
+      name: 'folder.svg',
+    },
+    content: $(() => <ViewIntroduction />),
+  },
+  {
+    id: Common.generateId(),
+    name: 'hangman',
+    icon: {
+      name: 'terminal.svg',
+    },
+    content: $(() => <ViewIntroduction />),
+  },
+  {
+    id: Common.generateId(),
+    name: 'esolang',
+    icon: {
+      name: 'terminal.svg',
+    },
+    content: $(() => <ViewIntroduction />),
+  },
+];
+
 
 export default component$(() => {
   /**
@@ -21,20 +51,14 @@ export default component$(() => {
 
   const executed = useStore<OSApps>({
     apps: [
-      {
-        icon: {
-          name: 'folder.svg',
-        },
-        name: 'Introduction',
-        content: $(() => <ViewIntroduction />),
-      },
+      apps[0],
     ],
-    count: 0,
   });
 
-  const state = useStore({
+  const minimized = useStore<OSApps>({
     apps: [
       {
+        id: Common.generateId(),
         icon: {
           name: 'github.svg',
         },
@@ -42,6 +66,7 @@ export default component$(() => {
         content: $(() => <Link href='https://github.com/carepollo' />),
       },
       {
+        id: Common.generateId(),
         icon: {
           name: 'mail.svg',
         },
@@ -49,10 +74,10 @@ export default component$(() => {
         content: $(() => <ViewContact />),
       },
     ],
-    count: 0,
   });
 
-  useContextProvider(OpenedAppsContext, state);
+  useContextProvider(OpenedAppsContext, minimized);
+
   useContextProvider(ExecutedAppsContext, executed);
 
 
