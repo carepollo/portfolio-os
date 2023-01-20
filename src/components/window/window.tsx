@@ -85,7 +85,7 @@ export default component$((props: App) => {
                         </div>
                         <div class="actions">
                             <button class="button minimize" onClick$={minimize}>
-                                _
+                                --
                             </button>
                             <button class="button resize" onClick$={maximize}>
                                 &#9744;

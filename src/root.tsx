@@ -1,13 +1,15 @@
 import { $, component$, createContext, useContextProvider, useStore, useStyles$ } from '@builder.io/qwik';
-import { Link, QwikCityProvider, RouterOutlet, ServiceWorkerRegister } from '@builder.io/qwik-city';
+import { QwikCityProvider, RouterOutlet, ServiceWorkerRegister } from '@builder.io/qwik-city';
 import { RouterHead } from './components/router-head/router-head';
 
 import globalStyles from './global.scss?inline';
 import { OSApps } from './models/os-apps';
 import ViewIntroduction from './components/view-introduction/view-introduction';
 import ViewContact from './components/view-contact/view-contact';
+import ViewGithub from './components/view-github/view-github';
 import { App } from './models/app';
 import { Common } from './utilities/common';
+import Terminal from './components/terminal/terminal';
 
 export const OpenedAppsContext = createContext<OSApps>('openedApps');
 export const ExecutedAppsContext = createContext<OSApps>('executedApps');
@@ -35,7 +37,7 @@ export const apps: App[] = [
     icon: {
       name: 'terminal.svg',
     },
-    content: $(() => <ViewIntroduction />),
+    content: $(() => <Terminal />),
   },
 ];
 
@@ -63,7 +65,7 @@ export default component$(() => {
           name: 'github.svg',
         },
         name: 'GitHub',
-        content: $(() => <Link href='https://github.com/carepollo' />),
+        content: $(() => <ViewGithub />),
       },
       {
         id: Common.generateId(),
