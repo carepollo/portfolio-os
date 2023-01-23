@@ -30,5 +30,12 @@ export interface App {
     /**
      * unique value to identify one app from another
      */
-    id?: string;
+    id: string;
+
+    // x: number;
+    // y: number;
+    minimized: boolean;
+    // maximized: boolean;
+    // closed: boolean;
+
 }

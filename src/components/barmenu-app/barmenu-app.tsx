@@ -2,19 +2,24 @@ import { $, component$, useContext, useSignal, useStylesScoped$ } from "@builder
 import Icon from "../icon/icon";
 import styles from './barmenu-app.scss?inline';
 import { App } from "~/models/app";
-import { ExecutedAppsContext, OpenedAppsContext } from "~/root";
+import { OpenedAppsContext } from "~/root";
 
 export default component$((props: App) => {
     useStylesScoped$(styles);
     const tooltipDisplay = useSignal(false);
     
-    const executingApps = useContext(ExecutedAppsContext);
-
-    const openedApps = useContext(OpenedAppsContext);
+    const state = useContext(OpenedAppsContext);
 
     const openApp = $(() => {
-        executingApps.apps = [...executingApps.apps, props];
-        openedApps.apps = openedApps.apps.filter(app => app.id !== props.id);
+        const copy = [...state.apps];
+        const value = Object.assign({}, props);
+        copy.forEach(app => {
+            if (app.id === value.id) {
+                app.minimized = false;
+            }
+        });
+        
+        state.apps = [...copy];
     });
     
     return (

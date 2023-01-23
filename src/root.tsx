@@ -9,10 +9,9 @@ import ViewContact from './components/view-contact/view-contact';
 import ViewGithub from './components/view-github/view-github';
 import { App } from './models/app';
 import { Common } from './utilities/common';
-import Terminal from './components/terminal/terminal';
+import ViewProjects from './components/view-projects/view-projects';
 
 export const OpenedAppsContext = createContext<OSApps>('openedApps');
-export const ExecutedAppsContext = createContext<OSApps>('executedApps');
 
 export const apps: App[] = [
   {
@@ -22,22 +21,34 @@ export const apps: App[] = [
       name: 'folder.svg',
     },
     content: $(() => <ViewIntroduction />),
+    minimized: false,
   },
   {
     id: Common.generateId(),
-    name: 'hangman',
+    name: 'Projects',
     icon: {
-      name: 'terminal.svg',
+      name: 'folder.svg',
     },
-    content: $(() => <ViewIntroduction />),
+    content: $(() => <ViewProjects />),
+    minimized: false,
   },
   {
     id: Common.generateId(),
-    name: 'esolang',
     icon: {
-      name: 'terminal.svg',
+      name: 'github.svg',
     },
-    content: $(() => <Terminal />),
+    name: 'GitHub',
+    content: $(() => <ViewGithub />),
+    minimized: false,
+  },
+  {
+    id: Common.generateId(),
+    icon: {
+      name: 'mail.svg',
+    },
+    name: 'Contact',
+    content: $(() => <ViewContact />),
+    minimized: false,
   },
 ];
 
@@ -50,37 +61,14 @@ export default component$(() => {
    * Dont remove the `<head>` and `<body>` elements.
    */
   useStyles$(globalStyles);
-
+  
   const executed = useStore<OSApps>({
     apps: [
       apps[0],
     ],
   });
 
-  const minimized = useStore<OSApps>({
-    apps: [
-      {
-        id: Common.generateId(),
-        icon: {
-          name: 'github.svg',
-        },
-        name: 'GitHub',
-        content: $(() => <ViewGithub />),
-      },
-      {
-        id: Common.generateId(),
-        icon: {
-          name: 'mail.svg',
-        },
-        name: 'Contact',
-        content: $(() => <ViewContact />),
-      },
-    ],
-  });
-
-  useContextProvider(OpenedAppsContext, minimized);
-
-  useContextProvider(ExecutedAppsContext, executed);
+  useContextProvider(OpenedAppsContext, executed);
 
 
   return (

@@ -9,7 +9,14 @@ export default component$(() => {
       <Slot />
       <section class="layout">
         {apps.map(app => (
-          <DesktopIcon icon={app.icon} name={app.name} content={app.content} key={app.id} />
+          <DesktopIcon 
+            id={app.id}
+            icon={app.icon} 
+            name={app.name} 
+            content={app.content} 
+            key={app.id} 
+            minimized={app.minimized} 
+          />
         ))}
       </section>
       <Header />

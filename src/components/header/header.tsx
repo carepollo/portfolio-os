@@ -14,7 +14,14 @@ export default component$(() => {
   return (
     <header>
       {state.apps.map(app => (
-        <BarmenuIcon icon={app.icon} name={app.name} content={app.content} key={app.id} />
+        <BarmenuIcon 
+          id={app.id}
+          icon={app.icon} 
+          name={app.name} 
+          content={app.content} 
+          key={app.id} 
+          minimized={app.minimized}
+        />
       ))}
     </header>
   );

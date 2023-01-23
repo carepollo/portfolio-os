@@ -2,19 +2,30 @@ import { $, component$, useContext, useSignal, useStylesScoped$ } from "@builder
 import Icon from "../icon/icon";
 import styles from './desktop-app.scss?inline';
 import { App } from "~/models/app";
-import { ExecutedAppsContext } from "~/root";
+import { OpenedAppsContext } from "~/root";
 
 export default component$((props: App) => {
     useStylesScoped$(styles);
 
-    const state = useContext(ExecutedAppsContext);
+    const state = useContext(OpenedAppsContext);
 
     const isBeingOpened = useSignal(false);
 
     const openApp = $(() => {
         isBeingOpened.value = true;
-        state.apps = [...state.apps, props];
-    })
+        let isOpen = false;
+        for (const app of state.apps) {
+            isOpen = app.id === props.id;
+            if (isOpen) {
+                break;
+            }
+        }
+
+        if (!isOpen) {
+            state.apps = [...state.apps, props];
+        }
+    });
+
     return (
         <>
             <div

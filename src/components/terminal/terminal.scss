@@ -9,4 +9,23 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+    overflow-x: hidden;
+}
+
+.input {
+    background-color: black;
+    color: white;
+    border: none;
+    font-weight: 700;
+    font-family: monospace;
+    width: 100%;
+    resize: none;
+}
+
+.input:focus {
+    outline: none;
+}
+
+textarea {
+    height: 100%;
 }

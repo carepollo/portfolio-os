@@ -2,4 +2,26 @@
 .inputForm {
     display: flex;
     flex-direction: column;
+    border: 1px solid black;
+    margin: 5px 0px;
+    padding: 5px;
+
+    input, textarea {
+        border: none;
+    }
+
+    input:focus, textarea:focus {
+        outline: none;
+    }
+
+    textarea {
+        resize: none;
+    }
+}
+
+.submitButton {
+    padding: 5px 15px;
+    background-color: grey;
+    border: 1px solid black;
+    color: white;
 }

@@ -11,12 +11,22 @@ export default component$(() => {
 
     return (
         <div class="terminal">
-            <input type="output" readOnly />
-            <input 
-                class="prompt" 
+            <textarea class="input output" id="output" readOnly value={state.output}/>
+            <input
+                class="input prompt" 
                 value={state.input} 
-                onChange$={(e) => state.input = e.target.value}
-                onKeyDown$={(e) => console.log(e.keyCode, e.key, e.charCode)} 
+                onKeyDown$={(e) => {
+                    if (e.key === 'Enter') {
+                        state.output += `\n${state.input}`;
+                        state.input = '';
+                        const output = document.getElementById('output');
+                        if (output) {
+                            output.scrollTop = output.scrollHeight;
+                        }
+                    } else {
+                        state.input += e.key;
+                    }
+                }} 
             />
         </div>
     );
