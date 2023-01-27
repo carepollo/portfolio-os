@@ -3,20 +3,6 @@ import type { DocumentHead } from '@builder.io/qwik-city';
 import Window from '~/components/window/window';
 import { OpenedAppsContext } from '~/root';
 
-/**
- * this is to configure the metadata of the head tag of the current route,
- * should be on every route to be described
- */
-export const head: DocumentHead = {
-  title: 'Portfolio',
-  meta: [
-    {
-      name: 'Home',
-      content: 'Personal site to show stuff about ChickenFace',
-    },
-  ],
-};
-
 export default component$(() => {
   
   const executingApps = useContext(OpenedAppsContext);
@@ -36,3 +22,11 @@ export default component$(() => {
     </>
   );
 });
+
+/**
+ * this is to configure the metadata of the head tag of the current route,
+ * should be on every route to be described
+ */
+export const head: DocumentHead = {
+  title: 'PortfolioOS',
+};
