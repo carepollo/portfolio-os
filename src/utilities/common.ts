@@ -1,3 +1,6 @@
+/**
+ * sort of equivalent to `environment` object in Angular projects.
+ */
 export class Common {
 
     /**
@@ -6,8 +9,12 @@ export class Common {
     public static production = !import.meta.env.DEV;
 
     /**
-     * generate a random ID, it is a dump implementation of `randomUUID`
+     * generate a random ID, it is an alternative implementation of `randomUUID`, because
+     * the built-in functions doesn't work on qwik runtime.
      * @returns two random numbers and a '-' caracter
+     * @example
+     * 
+     * const id = Common.generateId(); // returns 'xxxxxx-xxxxxx'
      */
     public static generateId(): string {
         const part1 = Math.floor(Math.random() * 100000);
@@ -15,4 +22,13 @@ export class Common {
         return `${part1}-${part2}`;
     }
 
+    /**
+     * the url root location of server/api where to point the requests and server actions
+     */
+    public static serverPath = !Common.production ? 'http://localhost:5000' : 'https://assistant.fly.dev'
+
+    /**
+     * the url root location of the self app
+     */
+    public static clientPath = !Common.production ? 'http://localhost:5173' : 'https://portfolio-carepollo.vercel.app/'
 }

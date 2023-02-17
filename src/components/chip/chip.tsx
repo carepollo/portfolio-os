@@ -26,10 +26,8 @@ export default component$((props: ChipProps) => {
     const { backgroundColor, textColor} = themes[props.theme] ?? themes['normal'];
 
     return (
-        <>
-            <div class="chip" style={{'background-color': backgroundColor, 'color': textColor}}>
-                {props.text}
-            </div>
-        </>
+        <span class="chip" style={{'background-color': backgroundColor, 'color': textColor}}>
+            {props.text}
+        </span>
     )
 });

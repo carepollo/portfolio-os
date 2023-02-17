@@ -20,7 +20,7 @@ export const RouterHead = component$(() => {
       <meta name="description" content="Projects, GitHub, Skills" />
       <meta name="author" content="ChickenFace" />
       <meta name="robots" content="index" />
-      <meta name="og:image" content="/favicon.svg" />
+      <meta name="og:image" content="/halgorithmics.jpg" />
       <meta name="og:type" content="website" />
 
       {head.meta.map((m) => (

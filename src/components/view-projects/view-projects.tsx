@@ -13,7 +13,7 @@ export default component$(() => {
         icon: {
           name: 'terminal.svg',
         },
-        content: $(() => <Terminal />),
+        content: $(() => <Terminal program="hangman" />),
         minimized: false,
       },
       {
@@ -22,7 +22,7 @@ export default component$(() => {
         icon: {
           name: 'terminal.svg',
         },
-        content: $(() => <Terminal />),
+        content: $(() => <Terminal program="esolang" />),
         minimized: false,
       },
     ];
@@ -41,4 +41,4 @@ export default component$(() => {
           ))}
         </>
     )
-})
+});

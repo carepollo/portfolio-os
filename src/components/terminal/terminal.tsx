@@ -1,29 +1,61 @@
-import { component$, useStore, useStylesScoped$ } from "@builder.io/qwik";
+import { NoSerialize, component$, noSerialize, useClientEffect$, useStore, useStylesScoped$ } from "@builder.io/qwik";
 import styles from './terminal.scss?inline';
+import { Socket, io } from "socket.io-client";
+import { Common } from "~/utilities/common";
+import { TerminalProps } from "~/models/terminal.props";
 
-export default component$(() => {
+export default component$((props: TerminalProps) => {
     useStylesScoped$(styles);
-
+    
     const state = useStore({
-        output: 'This project is called lol',
-        input: 'hello world',
+        output: '',
+        input: '',
+    });
+
+    const socketState = useStore<{socket: NoSerialize<Socket>}>({
+        socket: undefined,
+    })
+    
+    useClientEffect$(() => {
+        const socket = io(Common.serverPath);
+        
+        socket.on('initialize', (response: string) => state.output+= response);
+        socket.on('command', (response: string) => state.output+= response);
+
+        socket.on('connect', () => {
+            const initMessage = `Connected: ${socket.connected} with id ${socket.id}`
+            console.warn(initMessage);
+            socket.emit('initialize', props.program);
+        });
+
+        socketState.socket = noSerialize(socket);
     });
 
     return (
         <div class="terminal">
             <textarea class="input output" id="output" readOnly value={state.output}/>
             <input
+                placeholder="$ Type command"
                 class="input prompt" 
                 value={state.input} 
                 onKeyDown$={(e) => {
-                    if (e.key === 'Enter') {
-                        state.output += `\n${state.input}`;
+                    const blacklisted = ['Shift', 'Control', 'Alt', 'ArrowLeft', 'ArrowRight'];
+                    const pulsed = e.key;
+                    const found = blacklisted.find((x) => x === pulsed);
+
+                    if (pulsed === 'Enter') {
+                        socketState.socket?.emit('command', state.input);
                         state.input = '';
+
                         const output = document.getElementById('output');
                         if (output) {
                             output.scrollTop = output.scrollHeight;
                         }
-                    } else {
+                    }
+                    else if (pulsed === 'Backspace') {
+                        state.input = state.input.slice(0, -1);
+                    }
+                    else if (!found) {
                         state.input += e.key;
                     }
                 }} 

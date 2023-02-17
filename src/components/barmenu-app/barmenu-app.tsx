@@ -6,8 +6,8 @@ import { OpenedAppsContext } from "~/root";
 
 export default component$((props: App) => {
     useStylesScoped$(styles);
-    const tooltipDisplay = useSignal(false);
     
+    const tooltipDisplay = useSignal(false);
     const state = useContext(OpenedAppsContext);
 
     const openApp = $(() => {

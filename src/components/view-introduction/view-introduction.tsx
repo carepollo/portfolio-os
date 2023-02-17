@@ -38,6 +38,9 @@ export default component$(() => {
                                 a new app.
                             </p>
                             <p>
+                                The apps on the appbar are minimized apps, you click only once and is enough to make open again.
+                            </p>
+                            <p>
                                 Each app that you will see on this site (except for Contact Me, GitHub and Introduction) are
                                 side projects that I have developed.
                             </p>
