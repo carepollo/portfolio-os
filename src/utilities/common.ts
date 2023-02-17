@@ -24,6 +24,8 @@ export class Common {
 
     /**
      * the url root location of server/api where to point the requests and server actions
+     * 
+     * **second value is temporary, shall be modified**
      */
     public static serverPath = !Common.production ? 'http://localhost:5000' : 'https://assistant.fly.dev'
 

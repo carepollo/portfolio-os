@@ -1,5 +1,6 @@
-import { component$, useStore, useStylesScoped$ } from "@builder.io/qwik";
+import { $, component$, useStore, useStylesScoped$ } from "@builder.io/qwik";
 import styles from './view-contact.scss?inline';
+import { Common } from "~/utilities/common";
 
 export default component$(() => {
     useStylesScoped$(styles);
@@ -9,6 +10,12 @@ export default component$(() => {
         message: '',
     });
 
+    const submit = $(async () => {
+        await fetch(Common.serverPath);
+        state.title = '';
+        state.message = '';
+    });
+    
     return (
         <>
             <h2>Contact me</h2>
@@ -17,10 +24,7 @@ export default component$(() => {
                 how to get you back.
             </span>
             <br />
-            <form onSubmit$={e => {
-                    e.preventDefault();
-                    console.log(state);
-                }}>
+            <form>
                 <div class="inputForm">
                     <label>
                         <b>Title</b>
@@ -34,7 +38,7 @@ export default component$(() => {
                     <textarea cols={30} rows={10} onChange$={e =>  state.message = e.target.value}></textarea>
                 </div>
 
-                <button type="submit" class="submitButton">
+                <button class="submitButton" onClick$={submit}>
                     Send
                 </button>
             </form>
