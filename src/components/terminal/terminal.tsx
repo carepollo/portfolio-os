@@ -1,4 +1,11 @@
-import { NoSerialize, component$, noSerialize, useClientEffect$, useStore, useStylesScoped$ } from "@builder.io/qwik";
+import { 
+    NoSerialize,
+    component$,
+    noSerialize,
+    useBrowserVisibleTask$,
+    useStore,
+    useStylesScoped$,
+} from "@builder.io/qwik";
 import styles from './terminal.scss?inline';
 import { Socket, io } from "socket.io-client";
 import { Common } from "~/utilities/common";
@@ -14,9 +21,9 @@ export default component$((props: TerminalProps) => {
 
     const socketState = useStore<{socket: NoSerialize<Socket>}>({
         socket: undefined,
-    })
-    
-    useClientEffect$(() => {
+    });
+
+    useBrowserVisibleTask$(() => {
         const socket = io(Common.serverPath);
         
         socket.on('initialize', (response: string) => state.output+= response);
@@ -28,7 +35,7 @@ export default component$((props: TerminalProps) => {
             socket.emit('initialize', props.program);
         });
 
-        socketState.socket = noSerialize(socket);
+        socketState.socket = noSerialize(socket);  
     });
 
     return (
