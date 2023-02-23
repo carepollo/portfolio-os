@@ -27,7 +27,7 @@ export class Common {
      * 
      * **second value is temporary, shall be modified**
      */
-    public static serverPath = !Common.production ? 'http://localhost:5000' : 'https://assistant.fly.dev'
+    public static serverPath = !Common.production ? 'http://localhost:5000' : 'http://seuetestings.eastus.cloudapp.azure.com'
 
     /**
      * the url root location of the self app
