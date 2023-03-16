@@ -11,4 +11,6 @@ export interface PersonalNotification {
      * long text with body of message, no rich text allowed
      */
     message: string;
+
+    contact: string;
 }

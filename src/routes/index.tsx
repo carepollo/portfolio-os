@@ -1,21 +1,21 @@
 import { 
   component$,
-  // useBrowserVisibleTask$,
+  useVisibleTask$,
   useContext,
  } from '@builder.io/qwik';
 import { DocumentHead } from '@builder.io/qwik-city';
 import Window from '~/components/window/window';
 import { OpenedAppsContext } from '~/root';
-// import { notifyVisit } from '~/services/notifications.service';
+import { notifyMessage, getVisitor } from '~/services/notifications';
 
 export default component$(() => {
   
   const executingApps = useContext(OpenedAppsContext);
 
-  // useBrowserVisibleTask$(async () => {
-    // const token = await getVisitor();
-  //   await notifyVisit({title: '', message: 'Someone'});
-  // });
+  useVisibleTask$(async () => {
+    const token = await getVisitor();
+    await notifyMessage({title: '', message: token.ip, contact: ''});
+  });
 
   return (
     <>

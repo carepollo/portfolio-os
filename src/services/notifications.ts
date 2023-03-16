@@ -8,17 +8,16 @@ import { Common } from "~/utilities/common";
  * @param body the payload to send
  * @returns the result of request
  */
-const notify = async <A = unknown, B = unknown>(path: string, body: B) => {
+const notify = async <A = unknown, B = unknown>(body: B) => {
     const options: RequestInit = {
         method: 'POST',
-        mode: 'cors',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(body),
     };
 
-    const url = `${Common.serverPath}/${path}`;
+    const url = `${Common.serverPath}/notify`;
     const result = await fetch(url, options);
 
     if (!result.ok) {
@@ -29,11 +28,7 @@ const notify = async <A = unknown, B = unknown>(path: string, body: B) => {
 }
 
 export const notifyMessage = async (message: PersonalNotification) => {
-    return await notify<{}, PersonalNotification>('submit', message);
-}
-
-export const notifyVisit = async (message: PersonalNotification) => {
-    return await notify<PersonalNotification, PersonalNotification>('notify', message);
+    return await notify<{}, PersonalNotification>(message);
 }
 
 export const getVisitor = async () => {

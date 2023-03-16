@@ -1,4 +1,4 @@
-import { $, component$, createContext, useContextProvider, useStore, useStyles$ } from '@builder.io/qwik';
+import { $, component$, createContextId, useContextProvider, useStore, useStyles$ } from '@builder.io/qwik';
 import { QwikCityProvider, RouterOutlet, ServiceWorkerRegister } from '@builder.io/qwik-city';
 import { RouterHead } from './components/router-head/router-head';
 
@@ -11,7 +11,7 @@ import { App } from './models/app';
 import { Common } from './utilities/common';
 import ViewProjects from './components/view-projects/view-projects';
 
-export const OpenedAppsContext = createContext<OSApps>('openedApps');
+export const OpenedAppsContext = createContextId<OSApps>('openedApps');
 
 export const apps: App[] = [
   {

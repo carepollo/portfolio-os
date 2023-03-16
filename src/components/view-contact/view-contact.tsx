@@ -1,7 +1,7 @@
 import { $, component$, useStore, useStylesScoped$ } from "@builder.io/qwik";
 import styles from './view-contact.scss?inline';
 import { PersonalNotification } from "~/models/personal-notification";
-import { notifyMessage } from "~/services/notifications.service";
+import { notifyMessage } from "~/services/notifications";
 
 export const triggerSend = (val: PersonalNotification) => {
     return notifyMessage(val);
@@ -13,6 +13,7 @@ export default component$(() => {
     const state = useStore<PersonalNotification>({
         title: '',
         message: '',
+        contact: '',
     });
 
     const submit = $((data: PersonalNotification) => {
@@ -43,6 +44,16 @@ export default component$(() => {
                 </div>
                 <div class="inputForm">
                     <label>
+                        <b>Contact</b>
+                    </label>
+                    <input
+                        onChange$={e => state.contact = e.target.value}
+                        max={50}
+                        placeholder="discord tag/telegram user/email/way to contact u"
+                    />
+                </div>
+                <div class="inputForm">
+                    <label>
                         <b>Message</b>
                     </label>
                     <textarea 
@@ -54,8 +65,8 @@ export default component$(() => {
                 </div>
 
                 <button type="button" class="submitButton" onClick$={() => {
-                    const { title, message } = state;
-                    submit({title, message});
+                    const { title, message, contact } = state;
+                    submit({title, message, contact});
                     alert('Message sent');
                 }}>
                     Send
