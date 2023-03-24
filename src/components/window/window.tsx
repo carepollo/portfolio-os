@@ -1,105 +1,147 @@
-import { $, component$, useContext, useStore, useStylesScoped$ } from "@builder.io/qwik";
+import { $, component$, useContext, useSignal, useStylesScoped$ } from "@builder.io/qwik";
 import style from './window.scss?inline';
 import Icon from '~/components/icon/icon';
-import { OpenedAppsContext } from "~/root";
-import { App } from "~/models/app";
-import ViewNotexist from "../view-notexist/view-notexist";
+import { CurrentSettings, RunningAppsDirectory } from "~/root";
+import { Directory } from "~/models/directory";
+import { Common } from "~/utilities/common";
+import { Process } from "~/models/process";
 
-export default component$((props: App) => {
+export default component$((props: {id: string}) => {
     useStylesScoped$(style);
 
-    const state = useContext(OpenedAppsContext);
-
-    const store = useStore({
-        x: 0,
-        y: 0,
-        dragging: false,
-        minimized: false,
-        maximized: false,
-        closed: false,
-    });
+    const settings = useContext(CurrentSettings);
+    const appSet = useContext(RunningAppsDirectory);
+    const closed = useSignal(false);
     
     const drag = $(() => {
-        if (store.maximized) {
-            store.maximized = false;
+        const app = appSet.apps[props.id];
+        if (app.maximized) {
+            app.maximized = false;
         }
-        
-        store.dragging = true;
+        app.dragging = true;
     });
 
     const minimize = $(() => {
-        const copy = [...state.apps];
-        const value = Object.assign({}, props);
-        value.minimized = true;
-
-        let index = 0;
-        state.apps.find((value, i) => {
-            index = i;
-            return value.id === props.id;
-        });
-
-        copy[index] = value;
-        state.apps = [...copy];
+        const app = appSet.apps[props.id];
+        app.minimized = true;
     });
 
     const maximize = $(() => {
-        store.x = 0;
-        store.y = 0;
-        store.maximized = true;
+        const app = appSet.apps[props.id];
+        if (!app.maximized) {
+            app.x = Common.defaultWindowPositionX;
+            app.y = Common.defaultWindowPositionY;  
+            app.maximized = true;
+        } else {
+            app.maximized = false;
+        }
     });
 
     const close = $(() => {
-        store.closed = true;
-        state.apps = [...state.apps.filter(app => app.id !== props.id)];
+        appSet.apps[props.id].closed = true;
+        closed.value = true;
+        
+        const replacement = Object.values(appSet.apps).filter(x => x.id !== props.id);
+        const replaces: Directory<Process> = {};
+        Object.keys(appSet.apps).filter(x => x !== props.id).forEach((keyId, index) => {
+            replaces[keyId] = replacement[index];
+        });
+        appSet.apps = replaces;
     });
 
-    const drop = $(() => store.dragging = false );
+
+    // for the following two methods
+    // the event launches event if the component haven't been destroyed yet
+    // that is the purpose of this conditional, the other events doesn't launch without interaction
+    const drop = $(() => {
+        if (appSet.apps[props.id]) {
+            appSet.apps[props.id].dragging = false;
+        }
+    });
+
+    const dragging = $((x: number, y: number) => {
+        if(appSet.apps[props.id]) {
+            if(appSet.apps[props.id].dragging) {
+                const newX = appSet.apps[props.id].x + x;
+                const newY = appSet.apps[props.id].y + y;
+                appSet.apps[props.id].x = newX;
+
+                if (newY > 39) {
+                    appSet.apps[props.id].y = newY;
+                }
+            }
+        }
+    });
+
+    const setActive = $(() => {
+        //TODO set active overlay of app
+        const afterClicked: Directory<Process> = {};
+        const keys = Object.keys(appSet.apps);
+        const processes = Object.values(appSet.apps);
+
+        for (let i = 0; i < keys.length; i++) {
+            const element = processes[i];
+            const id = keys[i];
+            
+            element.active = false;
+            afterClicked[id] = element;
+        }
+        
+        afterClicked[props.id].active = true;
+        appSet.apps = afterClicked;
+        settings.currentApp = appSet.apps[props.id].app.name;
+    });
 
     return (        
         <>
-            <div 
-                class="window" 
-                style={{
-                    width: store.maximized ? '99%' : '550px',
-                    height: store.maximized ? '90%' : '400px',
-                    top: `${store.y}px`,
-                    left: `${store.x}px`,
-                }}
-            >
-                <div class="header"
-                    onMouseDown$={drag}
-                    onMouseMove$={(event) => {
-                        if(store.dragging) {
-                            store.x = store.x + event.movementX;
-                            store.y = store.y + event.movementY;
-                        }
-                    }}
-                    onMouseUp$={() => drop()}
-                    onMouseLeave$={() => drop()}
-                >
-                    <div class="title">
-                        <Icon name={props.icon.name} size={20} />
-                        <span>
-                            {props.name}
-                        </span>
-                    </div>
-                    <div class="actions">
-                        <button class="button minimize" onClick$={minimize}></button>
-                        <button class="button resize" onClick$={maximize}></button>
-                        <button class="button close" onClick$={close}></button>
-                    </div>
-                </div>
+            {closed.value ? null : (
                 <div 
-                    class="body"
+                    class="window" 
                     style={{
-                        height: store.maximized ? '100vh' : '400px'
+                        'width': appSet.apps[props.id].maximized ? '100vw' : '550px',
+                        'height': appSet.apps[props.id].maximized ? 'calc(100vh - 140px)' : '400px',
+                        'top': `${appSet.apps[props.id].y}px`,
+                        'left': `${appSet.apps[props.id].x}px`,
+                        'border': `3px solid ${Common.colorPalette[settings.theme].windowBorder}`,
+                        'z-index': appSet.apps[props.id].active ? 3 : 2,
                     }}
+                    onClick$={() => setActive()}
                 >
-                    {props.content ? props.content() : (
-                        <ViewNotexist />
-                    )}
+                    <div class="header"
+                        onMouseDown$={drag}
+                        onMouseMove$={(event) => {
+                            dragging(event.movementX, event.movementY);
+                        }}
+                        onMouseUp$={() => drop()}
+                        onMouseLeave$={() => drop()}
+                        style={{
+                            'background-color': Common.colorPalette[settings.theme].windowBorder,
+                        }}
+                    >
+                        <div class="title">
+                            <Icon name={appSet.apps[props.id].app.icon.name} size={20} />
+                            <span>
+                                {appSet.apps[props.id].app.name}
+                            </span>
+                        </div>
+                        <div class="actions">
+                            <button class="button minimize" onClick$={minimize}></button>
+                            <button class="button resize" onClick$={maximize}></button>
+                            <button class="button close" onClick$={close}></button>
+                        </div>
+                    </div>
+                    <div 
+                        class="body"
+                        style={{
+                            'height': appSet.apps[props.id].maximized ? 'calc(100vh - 190px)' : '349px',
+                            'background-color': Common.colorPalette[settings.theme].windowBackground,
+                            'overflow': 'scroll',
+                        }}
+                    >
+                        {appSet.apps[props.id].app.content()}
+                    </div>
                 </div>
-            </div>
+            )}
         </>
     )
 });

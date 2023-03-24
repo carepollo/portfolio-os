@@ -2,24 +2,17 @@ import { $, component$, useContext, useSignal, useStylesScoped$ } from "@builder
 import Icon from "../icon/icon";
 import styles from './barmenu-app.scss?inline';
 import { App } from "~/models/app";
-import { OpenedAppsContext } from "~/root";
+import { RunningAppsDirectory } from "~/root";
 
-export default component$((props: App) => {
+export default component$((props: App & {id: string}) => {
     useStylesScoped$(styles);
     
     const tooltipDisplay = useSignal(false);
-    const state = useContext(OpenedAppsContext);
+    const executing = useContext(RunningAppsDirectory);
 
-    const openApp = $(() => {
-        const copy = [...state.apps];
-        const value = Object.assign({}, props);
-        copy.forEach(app => {
-            if (app.id === value.id) {
-                app.minimized = false;
-            }
-        });
-        
-        state.apps = [...copy];
+    const toggleMinimization = $(() => {
+        const minimization = executing.apps[props.id];
+        executing.apps[props.id].minimized = !minimization.minimized;
     });
     
     return (
@@ -28,7 +21,7 @@ export default component$((props: App) => {
                 class="container" 
                 onMouseOver$={() => tooltipDisplay.value = true}
                 onMouseOut$={() => tooltipDisplay.value = false}
-                onClick$={openApp}
+                onClick$={toggleMinimization}
             >
                 <p 
                     class="tooltip" 

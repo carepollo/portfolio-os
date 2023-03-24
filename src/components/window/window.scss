@@ -1,6 +1,4 @@
 .window {
-    z-index: 3;
-    border: 3px solid #E1DFE1;
     border-radius: 5px;
     position: absolute;
 
@@ -9,8 +7,7 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        background-color: #E1DFE1;
-        height: 36px;
+        height: 45px;
         padding: 0px 3px;
         cursor: move;
 
@@ -29,8 +26,8 @@
             padding: 2px 5px;
             z-index: 4;
             cursor: pointer;
-            // font-size: 10px;
         }
+
         .button:active {
             filter: grayscale(0.2);
         }
@@ -38,9 +35,7 @@
     }
     
     .body {
-        background-color: white;
-        height: fit-content;
-        overflow: scroll;
+        padding: 3px;
     }
 }
 

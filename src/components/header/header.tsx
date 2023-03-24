@@ -1,28 +1,46 @@
-import { component$, useContext, useStylesScoped$ } from '@builder.io/qwik';
+import { $, component$, useContext, useSignal, useStylesScoped$, useVisibleTask$ } from '@builder.io/qwik';
 import styles from './header.scss?inline';
-import BarmenuIcon from '../barmenu-app/barmenu-app';
-import { OpenedAppsContext } from '~/root';
+import Icon from '../icon/icon';
+import { CurrentSettings } from '~/root';
+import { Common } from '~/utilities/common';
 
 /**
- * this is the apps bars on desktop view
+ * the header on site that says stuff
  */
 export default component$(() => {
+
+  const format = $((date: Date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    return formattedDate;
+  });
+
   useStylesScoped$(styles);
 
-  const state = useContext(OpenedAppsContext);
+  const settings = useContext(CurrentSettings);
+
+  const time = useSignal<string>();
+
+  useVisibleTask$(() => {
+    setInterval(async () => {
+      const result = await format(new Date());
+      time.value = result;
+    }, 500);
+  });
 
   return (
-    <header>
-      {state.apps.map(app => (
-        <BarmenuIcon 
-          id={app.id}
-          icon={app.icon} 
-          name={app.name} 
-          content={app.content} 
-          key={app.id} 
-          minimized={app.minimized}
-        />
-      ))}
+    <header style={{'background-color': Common.colorPalette[settings.theme].headerBackground}}>
+      <div>
+        <Icon name={'logo'} size={25} />
+        <span>{settings.currentApp}</span>
+      </div>
+      <span>{time.value}</span>
     </header>
   );
 });

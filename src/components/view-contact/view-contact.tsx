@@ -26,11 +26,6 @@ export default component$(() => {
     return (
         <>
             <h2>Contact me</h2>
-            <span>
-                It would be helpful, if you add any way to contact you in your message so I can know
-                how to get you back.
-            </span>
-            <br />
             <form>
                 <div class="inputForm">
                     <label>
@@ -38,18 +33,17 @@ export default component$(() => {
                     </label>
                     <input
                         onChange$={e => state.title = e.target.value}
-                        max={50}
+                        maxLength={50}
                         placeholder="50 chars max"
                     />
                 </div>
                 <div class="inputForm">
                     <label>
-                        <b>Contact</b>
+                        <b>Email</b>
                     </label>
                     <input
                         onChange$={e => state.contact = e.target.value}
-                        max={50}
-                        placeholder="discord tag/telegram user/email/way to contact u"
+                        placeholder="you email so I can get back to you"
                     />
                 </div>
                 <div class="inputForm">
@@ -66,8 +60,12 @@ export default component$(() => {
 
                 <button type="button" class="submitButton" onClick$={() => {
                     const { title, message, contact } = state;
-                    submit({title, message, contact});
-                    alert('Message sent');
+                    if (title !== '' && contact !== '' && message !== '') {
+                        submit({title, message, contact});
+                        alert('Message sent');
+                    } else {
+                        alert('You have not filled all fields');
+                    }
                 }}>
                     Send
                 </button>

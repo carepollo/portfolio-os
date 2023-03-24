@@ -26,16 +26,4 @@ export interface App {
      * };
      */
     content: QRL<() => JSX.Element>;
-
-    /**
-     * unique value to identify one app from another
-     */
-    id: string;
-
-    // x: number;
-    // y: number;
-    minimized: boolean;
-    // maximized: boolean;
-    // closed: boolean;
-
 }

@@ -10,12 +10,19 @@
 // @tailwind components;
 // @tailwind utilities;
 
+@font-face {
+  font-family: 'ubuntu';
+  src: url(/fonts/Ubuntu-Regular.ttf);
+}
 
-:root {
-  --admech_red: #9a1115;
-  --admech_orange: #fda600;
-  --admech_grey: #3d4b4d;
-  --admech_blue: #58c1cd;
+@font-face {
+  font-family: 'raleway';
+  src: url(/fonts/Raleway-Regular.ttf);
+}
+
+@font-face {
+  font-family: 'inconsolata';
+  src: url(/fonts/Inconsolata-VariableFont.ttf);
 }
 
 body {
@@ -28,15 +35,5 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: url(/wallpaper.webp);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position-y: top;
   user-select: none;
-}
-
-.layout {
-  display: grid;
-  grid-template-columns: repeat(9, 105px);
-  gap: 5px;
 }

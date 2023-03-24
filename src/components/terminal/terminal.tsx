@@ -2,40 +2,41 @@ import {
     NoSerialize,
     component$,
     noSerialize,
-    useBrowserVisibleTask$,
+    useVisibleTask$,
     useStore,
     useStylesScoped$,
 } from "@builder.io/qwik";
 import styles from './terminal.scss?inline';
 import { Socket, io } from "socket.io-client";
 import { Common } from "~/utilities/common";
-import { TerminalProps } from "~/models/terminal.props";
+import { TerminalState } from "~/models/terminal-state";
 
-export default component$((props: TerminalProps) => {
+export default component$((props: {program: string}) => {
     useStylesScoped$(styles);
     
-    const state = useStore({
+    const state = useStore<TerminalState>({
         output: '',
         input: '',
+        program: props.program,
     });
 
     const socketState = useStore<{socket: NoSerialize<Socket>}>({
         socket: undefined,
     });
 
-    useBrowserVisibleTask$(() => {
+    useVisibleTask$(() => {
         const socket = io(Common.serverPath);
         
-        socket.on('initialize', (response: string) => state.output+= response);
-        socket.on('command', (response: string) => state.output+= response);
+        socket.on('initialize', (response: string) => state.output += response);
+        socket.on('command', (response: string) => state.output += response);
 
         socket.on('connect', () => {
-            const initMessage = `Connected: ${socket.connected} with id ${socket.id}`
+            const initMessage = `Connected: ${socket.connected} with id ${socket.id}`;
             console.warn(initMessage);
             socket.emit('initialize', props.program);
         });
 
-        socketState.socket = noSerialize(socket);  
+        socketState.socket = noSerialize(socket);
     });
 
     return (

@@ -1,0 +1,10 @@
+div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: fit-content;
+    padding: 0vh 5px;
+    border-radius: 20px;
+    position: fixed;
+    z-index: 5;
+}

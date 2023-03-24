@@ -2,26 +2,30 @@
 .inputForm {
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
+    // border: 1px solid black;
     margin: 5px 0px;
     padding: 5px;
 
-    input, textarea {
-        border: none;
-    }
+    // input, textarea {
+    //     border: none;
+    // }
 
-    input:focus, textarea:focus {
-        outline: none;
-    }
+    // input:focus, textarea:focus {
+    //     outline: none;
+    // }
 
-    textarea {
-        resize: none;
-    }
+    // textarea {
+    //     resize: none;
+    // }
 }
 
 .submitButton {
     padding: 5px 15px;
-    background-color: grey;
-    border: 1px solid black;
-    color: white;
+    background: #0066A2;
+	color: white;
+	border-style: outset;
+	border-color: #0066A2;
+	height: 50px;
+	width: 100px;
+	text-shadow: none;
 }

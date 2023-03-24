@@ -2,28 +2,34 @@ import { $, component$, useContext, useSignal, useStylesScoped$ } from "@builder
 import Icon from "../icon/icon";
 import styles from './desktop-app.scss?inline';
 import { App } from "~/models/app";
-import { OpenedAppsContext } from "~/root";
+import { RunningAppsDirectory } from "~/root";
+import { Common } from "~/utilities/common";
+import { apps } from "~/installed";
+import { Process } from "~/models/process";
 
-export default component$((props: App) => {
+export default component$((props: App & {showTitle: boolean}) => {
     useStylesScoped$(styles);
 
-    const state = useContext(OpenedAppsContext);
+    const state = useContext(RunningAppsDirectory);
 
     const isBeingOpened = useSignal(false);
 
     const openApp = $(() => {
         isBeingOpened.value = true;
-        let isOpen = false;
-        for (const app of state.apps) {
-            isOpen = app.id === props.id;
-            if (isOpen) {
-                break;
-            }
-        }
-
-        if (!isOpen) {
-            state.apps = [...state.apps, props];
-        }
+        const id = Common.generateId();
+        const opened: Process = {
+          id,
+          app: apps[props.name],
+          state: {},
+          x: Common.defaultWindowPositionX,
+          y: Common.defaultWindowPositionY,
+          minimized: false,
+          maximized: false,
+          dragging: false,
+          closed: false,
+          active: false,
+        };
+        state.apps[id] = opened;
     });
 
     return (
@@ -31,10 +37,12 @@ export default component$((props: App) => {
             <div
                 onDblClick$={openApp}
                 onMouseLeave$={() => isBeingOpened.value = false}
-                style={{filter: isBeingOpened.value ? 'sepia(1)' : 'unset'}}
+                style={{
+                    filter: isBeingOpened.value ? 'sepia(1)' : 'unset',
+                }}
             >
                 <Icon name={props.icon.name} />
-                <p>{props.name}</p>
+                {props.showTitle ? (<p>{props.name}</p>) : null}
             </div>
         </>
     )

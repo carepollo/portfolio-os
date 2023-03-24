@@ -8,45 +8,22 @@ export default component$(() => {
         <main class="content">
             <h2>
                 Welcome to PortfolioOS
-                <img src="/favicon.svg" class="logo" />
             </h2>
-            <div>
-                <article>
-                    <section>
-                    </section>
-                    <section>
-                        <h5>
-                            How to use this portfolio
-                        </h5>
-                        <div>
-                            You will have a bottom bar (which we will call app bar) with the following icons <img class="inlineimg" src="barapp.png"/>.
-                            <br />
-                            The following options <img class="inlineimg" src="/windowcontrols.png"/> on top of the window that pops up serves respectively to:
-                            <ul>
-                                <li>
-                                    🟡 hides the app and stores it in the app bar.
-                                </li>
-                                <li>
-                                    🟢 will make the window to occupy the whole viewport of your browser.
-                                </li>
-                                <li>
-                                    🔴 this stops completely the process you are running.
-                                </li>
-                            </ul>
-                            <p>
-                                On the viewport there is also more icons, click twice on any of them to start execution of
-                                a new app.
-                            </p>
-                            <p>
-                                The apps on the appbar are minimized apps, you click only once and is enough to make open again.
-                            </p>
-                            <p>
-                                Each app that you will see on this site (except for Contact Me, GitHub and Introduction) are
-                                side projects that I have developed.
-                            </p>
-                        </div>
-                    </section>
-                </article>
+            <div class="article">
+                <p>
+                    You will have a bottom bar like this <img class="inlineimg" src="/pictures/barapp.png"/> where minimized apps wil appera, click them once to open them up.
+                </p>
+                <ul>
+                    <li>
+                        <img class="inlineimg" src="/pictures/minimizebutton.png" alt="minimize icon" /> hides the app and stores it in the app bar.
+                    </li>
+                    <li>
+                        <img class="inlineimg" src="/pictures/maximizebutton.png" alt="maximize icon" /> makes the windows oocupy the whole screen
+                    </li>
+                    <li>
+                        <img class="inlineimg" src="/pictures/closebutton.png" alt="close icon" /> this stops compeltely the process you are running.
+                    </li>
+                </ul>
             </div>
         </main>
     )

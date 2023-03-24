@@ -1,57 +1,25 @@
-import { $, component$, createContextId, useContextProvider, useStore, useStyles$ } from '@builder.io/qwik';
+import { 
+  component$, 
+  createContextId, 
+  useContextProvider, 
+  useStore, 
+  useStyles$, 
+  useTask$,
+} from '@builder.io/qwik';
 import { QwikCityProvider, RouterOutlet, ServiceWorkerRegister } from '@builder.io/qwik-city';
 import { RouterHead } from './components/router-head/router-head';
-
 import globalStyles from './global.scss?inline';
-import { OSApps } from './models/os-apps';
-import ViewIntroduction from './components/view-introduction/view-introduction';
-import ViewContact from './components/view-contact/view-contact';
-import ViewGithub from './components/view-github/view-github';
-import { App } from './models/app';
+import { Process } from './models/process';
 import { Common } from './utilities/common';
-import ViewProjects from './components/view-projects/view-projects';
+import { apps } from './installed';
+import { Directory } from './models/directory';
+import { OSSettings } from './models/os-settings';
 
-export const OpenedAppsContext = createContextId<OSApps>('openedApps');
 
-export const apps: App[] = [
-  {
-    id: Common.generateId(),
-    name: 'Introduction',
-    icon: {
-      name: 'folder.svg',
-    },
-    content: $(() => <ViewIntroduction />),
-    minimized: false,
-  },
-  {
-    id: Common.generateId(),
-    name: 'Projects',
-    icon: {
-      name: 'folder.svg',
-    },
-    content: $(() => <ViewProjects />),
-    minimized: false,
-  },
-  {
-    id: Common.generateId(),
-    icon: {
-      name: 'github.svg',
-    },
-    name: 'GitHub',
-    content: $(() => <ViewGithub />),
-    minimized: false,
-  },
-  {
-    id: Common.generateId(),
-    icon: {
-      name: 'mail.svg',
-    },
-    name: 'Contact',
-    content: $(() => <ViewContact />),
-    minimized: false,
-  },
-];
+type ContextProcessesDirectory = {apps: Directory<Process>};
 
+export const RunningAppsDirectory = createContextId<ContextProcessesDirectory>('runningApps');
+export const CurrentSettings = createContextId<OSSettings>('osSettings');
 
 export default component$(() => {
   /**
@@ -62,13 +30,37 @@ export default component$(() => {
    */
   useStyles$(globalStyles);
   
-  const executed = useStore<OSApps>({
-    apps: [
-      apps[0],
-    ],
+  const settings = useStore<OSSettings>({
+    theme: 'light',
+    font: 'ubuntu',
+    wallpaper: 'vecteezy',
+    currentApp: '',
+    deviceType: 'desktop',
   });
 
-  useContextProvider(OpenedAppsContext, executed);
+  const processes = useStore<ContextProcessesDirectory>({apps: {}}, {deep: true});
+
+  useContextProvider(CurrentSettings, settings);
+
+  useContextProvider(RunningAppsDirectory, processes);
+
+  useTask$(() => {
+    const id = Common.generateId();
+    const introduction: Process = {
+      id,
+      app: apps['Settings'],
+      state: {},
+      x: 50,
+      y: 50,
+      minimized: false,
+      maximized: false,
+      dragging: false,
+      closed: false,
+      active: false,
+    };
+    processes.apps[id] = introduction;
+    settings.currentApp = introduction.app.name;
+  });
 
 
   return (
@@ -79,7 +71,17 @@ export default component$(() => {
         <RouterHead />
       </head>
       <body lang="en">
-        <main class="mainframe">
+        <main 
+          class="mainframe" 
+          style={{
+            'background': `url(/pictures/${settings.wallpaper}.webp)`,
+            'font-family': `'${settings.font}', sans-serif`,
+            'background-size': 'cover',
+            'background-repeat': 'no-repeat',
+            'background-position': 'center',
+            'color': Common.colorPalette[settings.theme].textColor,
+          }}
+        >
           <RouterOutlet />
           <ServiceWorkerRegister />
         </main>

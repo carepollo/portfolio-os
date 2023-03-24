@@ -12,5 +12,8 @@ export interface PersonalNotification {
      */
     message: string;
 
+    /**
+     * a way to contact the author of the notification
+     */
     contact: string;
 }

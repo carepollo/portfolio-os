@@ -1,9 +1,7 @@
-import { component$, useStylesScoped$ } from "@builder.io/qwik"
+import { component$ } from "@builder.io/qwik"
 import { IconProps } from "~/models/icon.props";
-import styles from './icon.scss?inline';
 
 export default component$((props: IconProps) => {
-  useStylesScoped$(styles);
 
   let size = props.size + 'px';
   if (!props.size) {
@@ -13,7 +11,7 @@ export default component$((props: IconProps) => {
   return (
     <>
       <img 
-        src={props.name} 
+        src={`/icons/${props.name}.svg`} 
         alt="icon" 
         style={{
           width: size,
