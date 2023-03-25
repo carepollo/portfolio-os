@@ -1,7 +1,7 @@
 import { component$, useContext, useStylesScoped$ } from "@builder.io/qwik";
 import { CurrentSettings, RunningAppsDirectory } from "~/root";
 import styles from './app-bar.scss?inline';
-import BarmenuIcon from '../barmenu-app/barmenu-app';
+import BarmenuApp from '../barmenu-app/barmenu-app';
 import { Common } from "~/utilities/common";
 
 /**
@@ -19,7 +19,7 @@ export default component$(() => {
         style={{'background-color': Common.colorPalette[settings.theme].appbarBackground}}
       >
         {Object.values(executingApps.apps).map(app => (
-          <BarmenuIcon 
+          <BarmenuApp 
             icon={app.app.icon} 
             name={app.app.name} 
             content={app.app.content} 

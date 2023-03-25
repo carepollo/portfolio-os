@@ -8,10 +8,8 @@ import ViewContact from './components/view-contact/view-contact';
 import ViewProjects from './components/view-projects/view-projects';
 import ViewSettings from './components/view-settings/view-settings';
 
+// apps intalled on the system and its respective states
 
-/**
- * directory of desktop apps available (static data) that will show on desktop
- */
 export const apps: Directory<App> = {
     'Introduction': {
       name: 'Introduction',
@@ -43,12 +41,15 @@ export const apps: Directory<App> = {
     },
 }
 
-export const states: Directory<PersonalNotification | TerminalState> = {
+export const states: Directory<PersonalNotification | TerminalState | {}> = {
+  'Introduction': {},
+  'Projects': {},
   'Contact Me': {
     title: '',
     contact: '',
     message: '',
   },
+  'Settings': {},
   'esolang': {
     input: '',
     output: '',

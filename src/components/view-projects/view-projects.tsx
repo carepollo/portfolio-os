@@ -1,8 +1,8 @@
 import { $, component$ } from "@builder.io/qwik";
 import DesktopApp from "../desktop-app/desktop-app";
 import { App } from "~/models/app";
-import { Common } from "~/utilities/common";
 import Terminal from "../terminal/terminal";
+import { generateId } from "~/services/mutations";
 
 export default component$(() => {
 
@@ -23,7 +23,7 @@ export default component$(() => {
               name={project.name} 
               icon={project.icon} 
               content={project.content} 
-              key={Common.generateId()}
+              key={generateId()}
               showTitle={true}
             />
           ))}

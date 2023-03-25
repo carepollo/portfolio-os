@@ -2,9 +2,26 @@ div {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    width: fit-content;
-    padding: 0vh 5px;
+    min-width: 50vw;
+    max-width: 75vw;
+    overflow-x: scroll;
+    height: fit-content;
+    padding: 5px;
     border-radius: 20px;
     position: fixed;
     z-index: 5;
+}
+
+@media (max-width: 624px) {
+    div {
+        height: calc(100vh - 40px);
+        overflow-x: hidden;
+        overflow-y: scroll;
+        flex-direction: column;
+        min-width: unset;
+        max-width: unset;
+        justify-content: flex-end;
+        align-items: center;
+        border-radius: 0px;
+    }
 }

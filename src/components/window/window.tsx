@@ -5,6 +5,7 @@ import { CurrentSettings, RunningAppsDirectory } from "~/root";
 import { Directory } from "~/models/directory";
 import { Common } from "~/utilities/common";
 import { Process } from "~/models/process";
+import { setActiveWindow } from "~/services/mutations";
 
 export default component$((props: {id: string}) => {
     useStylesScoped$(style);
@@ -74,21 +75,8 @@ export default component$((props: {id: string}) => {
     });
 
     const setActive = $(() => {
-        //TODO set active overlay of app
-        const afterClicked: Directory<Process> = {};
-        const keys = Object.keys(appSet.apps);
-        const processes = Object.values(appSet.apps);
-
-        for (let i = 0; i < keys.length; i++) {
-            const element = processes[i];
-            const id = keys[i];
-            
-            element.active = false;
-            afterClicked[id] = element;
-        }
-        
-        afterClicked[props.id].active = true;
-        appSet.apps = afterClicked;
+        const newContext = setActiveWindow(appSet.apps, props.id);
+        appSet.apps = newContext;
         settings.currentApp = appSet.apps[props.id].app.name;
     });
 
@@ -105,7 +93,7 @@ export default component$((props: {id: string}) => {
                         'border': `3px solid ${Common.colorPalette[settings.theme].windowBorder}`,
                         'z-index': appSet.apps[props.id].active ? 3 : 2,
                     }}
-                    onClick$={() => setActive()}
+                    onMouseDown$={setActive}
                 >
                     <div class="header"
                         onMouseDown$={drag}

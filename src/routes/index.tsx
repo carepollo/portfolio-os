@@ -8,11 +8,11 @@ import { DocumentHead } from '@builder.io/qwik-city';
 import Window from '~/components/window/window';
 import { apps } from '~/installed';
 import { RunningAppsDirectory } from '~/root';
-import { Common } from '~/utilities/common';
 import DesktopApp from '~/components/desktop-app/desktop-app';
 import Header from '../components/header/header';
 import AppBar from '~/components/app-bar/app-bar';
 import styles from './index.scss?inline';
+import { generateId } from '~/services/mutations';
 
 
 export default component$(() => {
@@ -46,7 +46,7 @@ export default component$(() => {
                     icon={app.icon} 
                     name={app.name} 
                     content={app.content} 
-                    key={Common.generateId()} 
+                    key={generateId()} 
                     showTitle={false}
                   />
                 ))}

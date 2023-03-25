@@ -2,17 +2,25 @@ import { $, component$, useContext, useSignal, useStylesScoped$ } from "@builder
 import Icon from "../icon/icon";
 import styles from './barmenu-app.scss?inline';
 import { App } from "~/models/app";
-import { RunningAppsDirectory } from "~/root";
+import { CurrentSettings, RunningAppsDirectory } from "~/root";
+import { setActiveWindow } from "~/services/mutations";
 
 export default component$((props: App & {id: string}) => {
     useStylesScoped$(styles);
     
     const tooltipDisplay = useSignal(false);
     const executing = useContext(RunningAppsDirectory);
+    const settings = useContext(CurrentSettings);
 
     const toggleMinimization = $(() => {
         const minimization = executing.apps[props.id];
         executing.apps[props.id].minimized = !minimization.minimized;
+
+        if (!executing.apps[props.id].minimized) {
+            const changedActive = setActiveWindow(executing.apps, props.id);
+            executing.apps = changedActive;
+            settings.currentApp = executing.apps[props.id].app.name;
+        }
     });
     
     return (

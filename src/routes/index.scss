@@ -31,3 +31,25 @@
         }
     }
 }
+
+@media (max-width: 700px) {
+    .view {
+        .body {
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            
+            .appbar {
+                width: 10%;
+            }
+
+            .desktop {
+                width: calc(100vw - 15%);
+                
+                .layout {
+                    grid-template-columns: repeat(3, auto);
+                    gap: 2px;
+                }
+            }
+        }
+    }
+}
