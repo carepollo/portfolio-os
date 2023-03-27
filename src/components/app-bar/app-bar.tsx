@@ -1,5 +1,5 @@
 import { component$, useContext, useStylesScoped$ } from "@builder.io/qwik";
-import { CurrentSettings, RunningAppsDirectory, SystemContext} from "~/root";
+import { CurrentSettings, RunningAppsDirectory } from "~/root";
 import styles from './app-bar.scss?inline';
 import BarmenuApp from '../barmenu-app/barmenu-app';
 import { Common } from "~/utilities/common";

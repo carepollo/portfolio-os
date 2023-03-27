@@ -1,5 +1,6 @@
 import { component$ } from '@builder.io/qwik';
 import { useDocumentHead, useLocation } from '@builder.io/qwik-city';
+import { generateId } from '~/services/mutations';
 
 /**
  * The RouterHead component is placed inside of the document `<head>` element.
@@ -24,15 +25,19 @@ export const RouterHead = component$(() => {
       <meta name="og:type" content="website" />
 
       {head.meta.map((m) => (
-        <meta {...m} />
+        <meta {...m} key={generateId()} />
       ))}
 
       {head.links.map((l) => (
-        <link {...l} />
+        <link {...l} key={generateId()} />
       ))}
 
       {head.styles.map((s) => (
-        <style {...s.props} dangerouslySetInnerHTML={s.style} />
+        <style 
+          {...s.props} 
+          key={generateId()} 
+          dangerouslySetInnerHTML={s.style} 
+        />
       ))}
     </>
   );
