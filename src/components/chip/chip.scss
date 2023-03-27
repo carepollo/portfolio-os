@@ -1,8 +1,12 @@
 .chip {
     border-radius: 16px;
-    padding: 5px;
+    padding: 7px;
     font-weight: 700;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: fit-content;
 }
 
 .chip:hover {

@@ -6,7 +6,7 @@ import {
  } from '@builder.io/qwik';
 import { DocumentHead } from '@builder.io/qwik-city';
 import Window from '~/components/window/window';
-import { apps } from '~/installed';
+import { disk } from '~/disk';
 import { RunningAppsDirectory, SystemContext } from '~/root';
 import DesktopApp from '~/components/desktop-app/desktop-app';
 import Header from '../components/header/header';
@@ -23,6 +23,8 @@ export default component$(() => {
   const executingApps = useContext(RunningAppsDirectory);
 
   const system = useContext(SystemContext);
+
+  const desktopAppsLocation = 'desktop';
 
   useVisibleTask$(async () => {
     // const token = await getVisitor();
@@ -44,13 +46,14 @@ export default component$(() => {
 
               {/* this are the icons on desktop */}
               <section class="layout">
-                {Object.values(apps).map(app => (
+                {Object.values(disk[desktopAppsLocation]).map(({ app }) => (
                   <DesktopApp 
                     icon={app.icon} 
                     name={app.name} 
                     content={app.content} 
                     key={generateId()} 
                     showTitle={false}
+                    location={desktopAppsLocation}
                   />
                 ))}
               </section>

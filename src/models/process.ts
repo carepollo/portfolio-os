@@ -54,4 +54,9 @@ export interface Process<T = unknown> {
      * to determine on which app is the user right now so it can be overlayed over the others
      */
     active: boolean;
+
+    /**
+     * where is stored the origin app on the disk
+     */
+    location: string;
 }

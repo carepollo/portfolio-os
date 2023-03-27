@@ -4,14 +4,14 @@ import styles from './desktop-app.scss?inline';
 import { App } from "~/models/app";
 import { CurrentSettings, RunningAppsDirectory, SystemContext } from "~/root";
 import { Common } from "~/utilities/common";
-import { apps, states } from "~/installed";
+import { disk } from "~/disk";
 import { Process } from "~/models/process";
 import { generateId, setActiveWindow } from "~/services/mutations";
 
-export default component$((props: App & {showTitle: boolean}) => {
+export default component$((props: App & {showTitle: boolean, location: string}) => {
     useStylesScoped$(styles);
 
-    const state = useContext(RunningAppsDirectory);
+    const executingApps = useContext(RunningAppsDirectory);
 
     const settings = useContext(CurrentSettings);
 
@@ -22,10 +22,11 @@ export default component$((props: App & {showTitle: boolean}) => {
     const openApp = $(() => {
         isBeingOpened.value = true;
         const id = generateId();
+        const { app, state } = disk[props.location][props.name];
         const opened: Process = {
             id,
-            app: apps[props.name],
-            state: states[props.name],
+            app,
+            state,
             x: Common.defaultWindowPositionX,
             y: Common.defaultWindowPositionY,
             minimized: false,
@@ -33,11 +34,12 @@ export default component$((props: App & {showTitle: boolean}) => {
             dragging: false,
             closed: false,
             active: false,
+            location: props.location,
         };
-        state.apps[id] = opened;
-        const updatedWindowContext = setActiveWindow(state.apps, id);
-        state.apps = updatedWindowContext;
-        settings.currentApp = state.apps[id].app.name;    
+        executingApps.apps[id] = opened;
+        const updatedWindowContext = setActiveWindow(executingApps.apps, id);
+        executingApps.apps = updatedWindowContext;
+        settings.currentApp = executingApps.apps[id].app.name;    
     });
 
     const openWindow = $(async () => {
@@ -51,9 +53,9 @@ export default component$((props: App & {showTitle: boolean}) => {
             return;
         }
 
-        const opened = Object.values(state.apps).find(opened => opened.app.name === props.name);
+        const opened = Object.values(executingApps.apps).find(opened => opened.app.name === props.name);
         if (opened) {
-            setActiveWindow(state.apps, opened.id);
+            setActiveWindow(executingApps.apps, opened.id);
             return;
         }
 

@@ -1,32 +1,14 @@
 import { component$, useStylesScoped$ } from "@builder.io/qwik";
 import { ChipProps } from '~/models/chip.props';
+import Icon from "../icon/icon";
 import style from './chip.scss?inline';
 
 export default component$((props: ChipProps) => {
     useStylesScoped$(style);
 
-    const themes = {
-        normal: {
-            backgroundColor: 'grey',
-            textColor: 'black',
-        },
-        success: {
-            backgroundColor: 'green',
-            textColor: 'white',
-        },
-        error: {
-            backgroundColor: 'red',
-            textColor: 'white',
-        },
-        warning: {
-            backgroundColor: 'orange',
-            textColor: 'black',
-        }
-    };
-    const { backgroundColor, textColor} = themes[props.theme] ?? themes['normal'];
-
     return (
-        <span class="chip" style={{'background-color': backgroundColor, 'color': textColor}}>
+        <span class="chip" style={{'background-color': '#3f51b5', 'color': 'white'}}>
+            {props.icon ? <Icon name={props.icon.name} size={props.icon.size} /> : null}
             {props.text}
         </span>
     )

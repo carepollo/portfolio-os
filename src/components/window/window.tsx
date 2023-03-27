@@ -123,7 +123,7 @@ export default component$((props: {id: string}) => {
                         style={{
                             'height': appSet.apps[props.id].maximized ? 'calc(100vh - 190px)' : '349px',
                             'background-color': Common.colorPalette[settings.theme].windowBackground,
-                            'overflow': 'scroll',
+                            'overflow': 'auto',
                         }}
                     >
                         {appSet.apps[props.id].app.content()}

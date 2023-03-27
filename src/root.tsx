@@ -11,7 +11,7 @@ import { RouterHead } from './components/router-head/router-head';
 import globalStyles from './global.scss?inline';
 import { Process } from './models/process';
 import { Common } from './utilities/common';
-import { apps, states } from './installed';
+import { disk } from './disk';
 import { Directory } from './models/directory';
 import { OSSettings } from './models/os-settings';
 import { generateId } from './services/mutations';
@@ -66,19 +66,19 @@ export default component$(() => {
       const { theme, font, wallpaper, currentApp } = storedSettings;
 
       for (const key of Object.keys(storedState)) {
-        const { id, x, y, minimized, maximized, closed, dragging, app, active, state } = storedState[key];
+        const { location, app, state, id, x, y, minimized, maximized, active } = storedState[key];
         processes.apps[key] = {
           id,
           x,
           y,
           minimized,
           maximized,
-          closed,
-          dragging,
+          closed: false,
+          dragging: false,
           active,
-          app: apps[app.name],
-          // if it is a terminal app, use default state, use stored state otherwise
-          state: app.name === 'esolang' ? states[app.name] : state,
+          app: disk[location][app.name].app, // inner component cannot be recovered.
+          state,
+          location,
         };
       }
 
@@ -89,10 +89,11 @@ export default component$(() => {
     }
     else {
       const id = generateId();
+      const location = 'desktop';
       const introduction: Process = {
         id,
-        app: apps['Introduction'],
-        state: {},
+        app: disk[location]['Introduction'].app,
+        state: disk[location]['Introduction'].state,
         x: 50,
         y: 50,
         minimized: false,
@@ -100,6 +101,7 @@ export default component$(() => {
         dragging: false,
         closed: false,
         active: true,
+        location,
       };
       processes.apps[id] = introduction;
       settings.currentApp = introduction.app.name;

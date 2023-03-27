@@ -43,7 +43,7 @@ export default component$(() => {
                     </label>
                     <input
                         onChange$={e => state.contact = e.target.value}
-                        placeholder="you email so I can get back to you"
+                        placeholder="Your email so I can get back to you"
                     />
                 </div>
                 <div class="inputForm">
