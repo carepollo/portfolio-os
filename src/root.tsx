@@ -15,13 +15,14 @@ import { apps, states } from './installed';
 import { Directory } from './models/directory';
 import { OSSettings } from './models/os-settings';
 import { generateId } from './services/mutations';
+import { Machine } from './models/machine';
 
 
 type ContextProcessesDirectory = {apps: Directory<Process>};
 
 export const RunningAppsDirectory = createContextId<ContextProcessesDirectory>('runningApps');
 export const CurrentSettings = createContextId<OSSettings>('osSettings');
-export const Booting = createContextId<{rerun: boolean}>('booting');
+export const SystemContext = createContextId<Machine>('system');
 
 export default component$(() => {
   /**
@@ -32,8 +33,9 @@ export default component$(() => {
    */
   useStyles$(globalStyles);
 
-  const bootingup = useStore({
-    rerun: false,
+  const bootingup = useStore<Machine>({
+    loaded: false,
+    deviceType: 'desktop',
   });
   
   const settings = useStore<OSSettings>({
@@ -41,7 +43,6 @@ export default component$(() => {
     font: 'ubuntu',
     wallpaper: 'vecteezy',
     currentApp: '',
-    deviceType: 'desktop',
   });
 
   const processes = useStore<ContextProcessesDirectory>({apps: {}}, {deep: true});
@@ -50,7 +51,7 @@ export default component$(() => {
 
   useContextProvider(RunningAppsDirectory, processes);
 
-  useContextProvider(Booting, bootingup);
+  useContextProvider(SystemContext, bootingup);
 
   const storageState = 'portfolioos_state';
   const storageSettings = 'portfolioos_settings';
@@ -104,19 +105,19 @@ export default component$(() => {
       settings.currentApp = introduction.app.name;
     }
 
-    settings.deviceType = window.innerWidth > 624 ? 'desktop' : 'mobile';
-    bootingup.rerun = true;
+    bootingup.deviceType = window.innerWidth > 624 ? 'desktop' : 'mobile';
+    bootingup.loaded = true;
   });
 
   useVisibleTask$(({ track }) => {
     track(() => {
-      if (bootingup.rerun) {
+      if (bootingup.loaded) {
         localStorage.setItem(storageState, JSON.stringify(processes.apps));
       }
       return processes;
     });
     track(() => {
-      if (bootingup.rerun) {
+      if (bootingup.loaded) {
         localStorage.setItem(storageSettings, JSON.stringify(settings));
       }
       return settings;

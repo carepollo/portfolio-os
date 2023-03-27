@@ -1,14 +1,14 @@
 import { Slot, component$, useContext } from '@builder.io/qwik';
 import Bootloading from '~/components/bootloading/bootloading';
-import { Booting } from '~/root';
+import { SystemContext } from '~/root';
 
 export default component$(() => {
 
-  const booting = useContext(Booting);
+  const machine = useContext(SystemContext);
 
   return (
     <>
-      {booting.rerun ? ( <Slot /> ) : (<Bootloading />)}      
+      {machine.loaded ? ( <Slot /> ) : (<Bootloading />)}      
     </>
   );
 });

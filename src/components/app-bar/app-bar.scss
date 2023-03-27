@@ -12,7 +12,7 @@ div {
     z-index: 5;
 }
 
-@media (max-width: 624px) {
+@media (max-width: 700px) {
     div {
         height: calc(100vh - 40px);
         overflow-x: hidden;

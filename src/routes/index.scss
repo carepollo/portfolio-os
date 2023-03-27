@@ -39,14 +39,15 @@
             justify-content: space-between;
             
             .appbar {
-                width: 10%;
+                width: 80px;
             }
 
             .desktop {
-                width: calc(100vw - 15%);
+                width: calc(100% - 80px);
+                padding-top: 10px;
                 
                 .layout {
-                    grid-template-columns: repeat(3, auto);
+                    grid-template-columns: repeat(auto-fit, minmax(50px, auto));
                     gap: 2px;
                 }
             }

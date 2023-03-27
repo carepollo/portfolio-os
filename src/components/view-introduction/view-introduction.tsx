@@ -11,7 +11,7 @@ export default component$(() => {
             </h2>
             <div class="article">
                 <p>
-                    You will have a bottom bar like this <img class="inlineimg" src="/pictures/barapp.png"/> where minimized apps wil appera, click them once to open them up.
+                    You will have a bottom bar like this <img class="inlineimg" src="/pictures/barapp.png"/> where minimized apps wil appear, click them once to open them up.
                 </p>
                 <ul>
                     <li>

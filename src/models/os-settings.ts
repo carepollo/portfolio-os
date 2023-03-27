@@ -23,8 +23,4 @@ export interface OSSettings {
      */
     currentApp: string;
 
-    /**
-     * mobile or desktop, refers to what type of device must simulate is based on the screen size
-     */
-    deviceType: 'mobile' | 'desktop';
 }

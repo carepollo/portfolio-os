@@ -7,11 +7,12 @@ import {
 import { DocumentHead } from '@builder.io/qwik-city';
 import Window from '~/components/window/window';
 import { apps } from '~/installed';
-import { RunningAppsDirectory } from '~/root';
+import { RunningAppsDirectory, SystemContext } from '~/root';
 import DesktopApp from '~/components/desktop-app/desktop-app';
 import Header from '../components/header/header';
 import AppBar from '~/components/app-bar/app-bar';
 import styles from './index.scss?inline';
+import Screen from '~/components/screen/screen';
 import { generateId } from '~/services/mutations';
 
 
@@ -20,6 +21,8 @@ export default component$(() => {
   useStylesScoped$(styles);
   
   const executingApps = useContext(RunningAppsDirectory);
+
+  const system = useContext(SystemContext);
 
   useVisibleTask$(async () => {
     // const token = await getVisitor();
@@ -54,7 +57,9 @@ export default component$(() => {
 
               {/* this are the opened windows */}
               {Object.values(executingApps.apps).map(app => !app.minimized ? (
-                <Window id={app.id} key={app.id} />
+                system.deviceType === 'desktop' ?
+                  <Window id={app.id} key={app.id} /> :
+                  <Screen id={app.id} key={app.id} />
               ): null)}
             </div>
             <div class="appbar">

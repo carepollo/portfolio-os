@@ -1,11 +1,14 @@
-import { component$ } from "@builder.io/qwik"
+import { component$, useContext } from "@builder.io/qwik"
 import { IconProps } from "~/models/icon.props";
+import { SystemContext } from "~/root";
 
 export default component$((props: IconProps) => {
 
+  const system = useContext(SystemContext);
+
   let size = props.size + 'px';
   if (!props.size) {
-    size = '70px';
+    size = system.deviceType === 'desktop' ? '70px' : '50px';
   }
   
   return (
