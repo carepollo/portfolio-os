@@ -1,6 +1,5 @@
 import { 
   component$,
-  useVisibleTask$,
   useContext,
   useStylesScoped$,
  } from '@builder.io/qwik';
@@ -26,14 +25,14 @@ export default component$(() => {
 
   const desktopAppsLocation = 'desktop';
 
-  useVisibleTask$(async () => {
-    // const token = await getVisitor();
-    // await notifyMessage({
-    //   title: 'New visitor',
-    //   message: 'In Portfolio OS',
-    //   contact: token.ip,
-    // });
-  });
+  // useVisibleTask$(async () => {
+  //   const token = await getVisitor();
+  //   await notifyMessage({
+  //     title: 'New visitor',
+  //     message: 'In Portfolio OS',
+  //     contact: token.ip,
+  //   });
+  // });
 
   return (
     <>

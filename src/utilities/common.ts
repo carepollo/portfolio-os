@@ -16,12 +16,12 @@ export class Common {
      * 
      * **second value is temporary, shall be modified**
      */
-    public static readonly serverPath = 'http://localhost:5000'
+    public static readonly serverPath = 'http://34.125.239.168'
 
     /**
      * the url root location of the self app
      */
-    public static readonly clientPath = !Common.production ? 'http://localhost:5173' : 'https://portfolio-carepollo.vercel.app/'
+    public static readonly clientPath = !Common.production ? 'http://localhost:5173' : 'https://portfolio-os-carepollo.vercel.app'
 
     /**
      * when opening a new app or after minimizing, the position that must recover

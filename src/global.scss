@@ -25,6 +25,10 @@
   src: url(/fonts/Inconsolata-VariableFont.ttf);
 }
 
+:root {
+  --default_background: #00a2ed; // system background for uncomputed tasks
+}
+
 body {
   padding: 0;
   margin: 0;
