@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'error';
+    src: url(/fonts/BigBlueTerminalPlusCompleteMono.ttf);
+}
+
+.deathscreen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'error';
+    color: white;
+    background-color: var(--default_background);
+}
