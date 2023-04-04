@@ -95,6 +95,32 @@ export default component$(() => {
                     <label for="light">Light</label>
                 </div>
             </fieldset>
+
+            <fieldset>
+                <legend>Mode</legend>
+                <div>
+                    <input 
+                        type="radio"
+                        id="manual"
+                        name="mode"
+                        value="manual"
+                        checked={settings.mode === 'manual'}
+                        onClick$={() => settings.mode = 'manual'}
+                    />
+                    <label for="manual">Manual - recommended for desktop devices</label>
+                </div>
+                <div>
+                    <input 
+                        type="radio" 
+                        id="touch" 
+                        name="mode" 
+                        value="touch" 
+                        checked={settings.mode === 'touch'}
+                        onClick$={() => settings.mode = 'touch'}
+                    />
+                    <label for="touch">Touch - recommended for mobile devices</label>
+                </div>
+            </fieldset>
         </>
     );
 });

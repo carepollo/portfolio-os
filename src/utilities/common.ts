@@ -55,4 +55,14 @@ export class Common {
         },
     };
 
+    public static readonly positions = {
+        window: {
+            x: 0,
+            y: 38,
+        },
+        screen: {
+            x: 0,
+            y: 38,
+        },
+    }
 }

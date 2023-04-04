@@ -1,20 +1,21 @@
 import { component$, useContext } from "@builder.io/qwik"
 import { IconProps } from "~/models/icon.props";
-import { SystemContext } from "~/root";
+import { CurrentSettings, SystemContext } from "~/root";
 
 export default component$((props: IconProps) => {
 
-  const system = useContext(SystemContext);
+  const settings = useContext(CurrentSettings);
 
   let size = props.size + 'px';
   if (!props.size) {
-    size = system.deviceType === 'desktop' ? '70px' : '50px';
+    size = settings.mode === 'manual' ? '70px' : '50px';
   }
   
   return (
     <>
       <img 
         src={`/icons/${props.name}.svg`} 
+        title={props.title}
         alt="icon" 
         style={{
           width: size,

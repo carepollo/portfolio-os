@@ -9,4 +9,9 @@ export interface IconProps {
      * width and height of the icon in pixels, have a default value of 75
      */
     size?: number;
+
+    /**
+     * text to put on the title html property
+     */
+    title?: string;
 }

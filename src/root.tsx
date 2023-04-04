@@ -35,7 +35,6 @@ export default component$(() => {
 
   const bootingup = useStore<Machine>({
     loaded: false,
-    deviceType: 'desktop',
   });
   
   const settings = useStore<OSSettings>({
@@ -43,6 +42,7 @@ export default component$(() => {
     font: 'ubuntu',
     wallpaper: 'vecteezy',
     currentApp: '',
+    mode: 'manual',
   });
 
   const processes = useStore<ContextProcessesDirectory>({apps: {}}, {deep: true});
@@ -107,7 +107,7 @@ export default component$(() => {
       settings.currentApp = introduction.app.name;
     }
 
-    bootingup.deviceType = window.innerWidth > 624 ? 'desktop' : 'mobile';
+    settings.mode = window.innerWidth > 624 ? 'manual' : 'touch';
     bootingup.loaded = true;
   });
 

@@ -1,4 +1,5 @@
 import { 
+  $,
   component$,
   useContext,
   useStylesScoped$,
@@ -6,13 +7,13 @@ import {
 import { DocumentHead } from '@builder.io/qwik-city';
 import Window from '~/components/window/window';
 import { disk } from '~/disk';
-import { RunningAppsDirectory, SystemContext } from '~/root';
-import DesktopApp from '~/components/desktop-app/desktop-app';
+import { CurrentSettings, RunningAppsDirectory } from '~/root';
 import Header from '../components/header/header';
 import AppBar from '~/components/app-bar/app-bar';
 import styles from './index.scss?inline';
 import Screen from '~/components/screen/screen';
-import { generateId } from '~/services/mutations';
+import { generateId, startProcess } from '~/services/mutations';
+import IconAction from '~/components/icon-action/icon-action';
 
 
 export default component$(() => {
@@ -21,16 +22,15 @@ export default component$(() => {
   
   const executingApps = useContext(RunningAppsDirectory);
 
-  const system = useContext(SystemContext);
+  const settings = useContext(CurrentSettings);
 
   const desktopAppsLocation = 'desktop';
 
   // useVisibleTask$(async () => {
-  //   const token = await getVisitor();
   //   await notifyMessage({
   //     title: 'New visitor',
   //     message: 'In Portfolio OS',
-  //     contact: token.ip,
+  //     contact: '',
   //   });
   // });
 
@@ -46,20 +46,21 @@ export default component$(() => {
               {/* this are the icons on desktop */}
               <section class="layout">
                 {Object.values(disk[desktopAppsLocation]).map(({ app }) => (
-                  <DesktopApp 
-                    icon={app.icon} 
-                    name={app.name} 
-                    content={app.content} 
-                    key={generateId()} 
-                    showTitle={false}
-                    location={desktopAppsLocation}
+                  <IconAction 
+                    name={app.icon.name} 
+                    title={app.name} 
+                    action={$(() => {
+                      startProcess(executingApps.apps, 'desktop', app.name, settings);
+                    })} 
+                    trigger={settings.mode === 'manual' ? 'click' : 'dblclick'} 
+                    key={generateId()}
                   />
                 ))}
               </section>
 
               {/* this are the opened windows */}
               {Object.values(executingApps.apps).map(app => !app.minimized ? (
-                system.deviceType === 'desktop' ?
+                settings.mode === 'manual' ?
                   <Window id={app.id} key={app.id} /> :
                   <Screen id={app.id} key={app.id} />
               ): null)}

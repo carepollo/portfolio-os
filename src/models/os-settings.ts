@@ -23,4 +23,10 @@ export interface OSSettings {
      */
     currentApp: string;
 
+    /**
+     * `touch` is preferred for mobile devices
+     * `manual` is preferred for desktop devices
+     * but should work correctly with both
+     */
+    mode: 'touch' | 'manual';
 }

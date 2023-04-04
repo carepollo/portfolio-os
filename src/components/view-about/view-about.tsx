@@ -1,9 +1,22 @@
-import { component$ } from "@builder.io/qwik";
-import Icon from "../icon/icon";
+import { $, component$, useContext } from "@builder.io/qwik";
+import IconAnchor from "../icon-anchor/icon-anchor";
+import IconAction from "../icon-action/icon-action";
+import { startProcess } from "~/services/mutations";
+import { CurrentSettings, RunningAppsDirectory } from "~/root";
 
-export default component$(() => {    
+export default component$(() => {
+
+    const openedApps = useContext(RunningAppsDirectory);
+
+    const settings = useContext(CurrentSettings);
+
+    const openApp = $(() => {
+        startProcess(openedApps.apps, 'desktop', 'Contact Me', settings);
+    });
+
+
     return (
-        <div style={{'text-align': 'justify', 'padding': '15px'}}>
+        <div style={{'text-align': 'justify', 'padding': '0px 15px'}}>
             <h3>About me</h3>
             <div>
                 <p>
@@ -23,11 +36,11 @@ export default component$(() => {
                 </p>
             </div>
             <h3>More about me</h3>
-            <div>
-                <Icon name="mail" size={20} />
-                <Icon name="github" size={20} />
-                {/* <Icon name="linkedin" size={20} /> */}
-                {/* <Icon name="telegram" size={20} /> */}
+            <div style={{display: 'flex'}}>
+                <IconAction name="mail" size={20} action={openApp} title="Contact Me" trigger="click" />
+                <IconAnchor name="github" size={20} site="https://github.com/carepollo" />
+                <IconAnchor name="linkedin" size={20} site="https://linkedin.com" />
+                <IconAnchor name="telegram" size={20} site="https://t.me/chickenface" />
             </div>
         </div>
     );

@@ -30,7 +30,3 @@ const notify = async <A = unknown, B = unknown>(body: B) => {
 export const notifyMessage = async (message: PersonalNotification) => {
     return await notify<{}, PersonalNotification>(message);
 }
-
-export const getVisitor = async () => {
-    return await fetch('https://api.ipify.org/?format=json').then(res => res.json());
-}
