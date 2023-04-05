@@ -57,13 +57,30 @@ export default component$(() => {
   const storageSettings = 'portfolioos_settings';
 
   useVisibleTask$(() => {
-    const possibleState = localStorage.getItem(storageState);
-    const possibleSettings = localStorage.getItem(storageSettings);
+    const loadDefaultState = () => {
+      const id = generateId();
+      const location = 'desktop';
+      const introduction: Process = {
+        id,
+        app: disk[location]['Introduction'].app,
+        state: disk[location]['Introduction'].state,
+        x: 50,
+        y: 50,
+        minimized: false,
+        maximized: false,
+        dragging: false,
+        closed: false,
+        active: true,
+        location,
+      };
+      processes.apps[id] = introduction;
+      settings.currentApp = introduction.app.name;
+    }
 
-    if (possibleState && possibleSettings) {
+    const loadStoredData = (possibleState: string, possibleSettings: string) => {
       const storedState: Directory<Process> = JSON.parse(possibleState);
       const storedSettings: OSSettings = JSON.parse(possibleSettings);
-      const { theme, font, wallpaper, currentApp, mode } = storedSettings;
+      const { theme, font, wallpaper, currentApp } = storedSettings;
 
       for (const key of Object.keys(storedState)) {
         const { location, app, state, id, x, y, minimized, maximized, active } = storedState[key];
@@ -86,26 +103,21 @@ export default component$(() => {
       settings.font = font;
       settings.wallpaper = wallpaper;
       settings.currentApp = currentApp;
-      settings.mode = mode;
-    }
-    else {
-      const id = generateId();
-      const location = 'desktop';
-      const introduction: Process = {
-        id,
-        app: disk[location]['Introduction'].app,
-        state: disk[location]['Introduction'].state,
-        x: 50,
-        y: 50,
-        minimized: false,
-        maximized: false,
-        dragging: false,
-        closed: false,
-        active: true,
-        location,
-      };
-      processes.apps[id] = introduction;
-      settings.currentApp = introduction.app.name;
+    };
+
+
+    try {
+      const possibleState = localStorage.getItem(storageState);
+      const possibleSettings = localStorage.getItem(storageSettings);
+
+      if (possibleSettings && possibleState) {
+        loadStoredData(possibleState, possibleSettings);
+      }
+      else {
+        loadDefaultState();
+      }
+    } catch (error) {
+      loadDefaultState();
     }
 
     settings.mode = window.innerWidth > 700 ? 'manual' : 'touch';
