@@ -25,6 +25,7 @@ export default component$(() => {
             name={process.app.icon.name}
             trigger="click"
             action={$(() => {
+              //toggle minimization and unminization
               const minimization = executingApps.apps[process.id];
               executingApps.apps[process.id].minimized = !minimization.minimized;
 

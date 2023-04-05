@@ -1,5 +1,6 @@
 import { disk } from "~/disk";
 import { Directory } from "~/models/directory";
+import { ModalData } from "~/models/modal-data";
 import { OSSettings } from "~/models/os-settings";
 import { Process } from "~/models/process";
 import { Common } from "~/utilities/common";
@@ -82,4 +83,33 @@ export const startProcess = (context: Directory<Process>, location: string, name
     const updatedWindowContext = setActiveWindow(context, id);
     context = updatedWindowContext;
     settings.currentApp = context[id].app.name; 
+}
+
+/**
+ * to obtain the equivalent value of the theme in the opposite theme
+ * @param theme the theme name stored on settings 'light' or 'dark'
+ * @returns the opposite theme
+ * @example
+ * const currentTheme = 'light';
+ * invertTheme(currentTheme) // returns 'dark'
+ */
+export const invertTheme = (theme: string): string => {
+    const themes: Directory<string> = {
+        'light': 'dark',
+        'dark': 'light',
+    };
+    const result = themes[theme];
+    return result;
+}
+
+/**
+ * open the modal with the given data
+ * @param context qwik context of the modal, a global one at the moment
+ * @param title title, main message
+ * @param message long text to show
+ */
+export const openModal = (context: ModalData, title: string, message: string = ''): void  => {
+    context.show = true;
+    context.message = message;
+    context.title = title;
 }

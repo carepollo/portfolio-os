@@ -16,6 +16,7 @@ import { Directory } from './models/directory';
 import { OSSettings } from './models/os-settings';
 import { generateId } from './services/mutations';
 import { Machine } from './models/machine';
+import { ModalData } from './models/modal-data';
 
 
 type ContextProcessesDirectory = {apps: Directory<Process>};
@@ -23,6 +24,7 @@ type ContextProcessesDirectory = {apps: Directory<Process>};
 export const RunningAppsDirectory = createContextId<ContextProcessesDirectory>('runningApps');
 export const CurrentSettings = createContextId<OSSettings>('osSettings');
 export const SystemContext = createContextId<Machine>('system');
+export const GlobalModalContext = createContextId<ModalData>('modalState');
 
 export default component$(() => {
   /**
@@ -45,6 +47,12 @@ export default component$(() => {
     mode: 'manual',
   });
 
+  const modal = useStore<ModalData>({
+    title: '',
+    message: '',
+    show: false,
+  });
+
   const processes = useStore<ContextProcessesDirectory>({apps: {}}, {deep: true});
 
   useContextProvider(CurrentSettings, settings);
@@ -52,6 +60,8 @@ export default component$(() => {
   useContextProvider(RunningAppsDirectory, processes);
 
   useContextProvider(SystemContext, bootingup);
+
+  useContextProvider(GlobalModalContext, modal);
 
   const storageState = 'portfolioos_state';
   const storageSettings = 'portfolioos_settings';

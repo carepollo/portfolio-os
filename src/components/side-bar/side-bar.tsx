@@ -3,7 +3,7 @@ import { CurrentSettings, RunningAppsDirectory } from "~/root";
 import styles from './side-bar.scss?inline';
 import IconAction from "../icon-action/icon-action";
 import { Common } from "~/utilities/common";
-import { setActiveWindow } from "~/services/mutations";
+import { invertTheme, setActiveWindow } from "~/services/mutations";
 
 export default component$(() => {
     
@@ -13,15 +13,12 @@ export default component$(() => {
 
     const settings = useContext(CurrentSettings);
 
-    const invert = {
-        'light': 'dark',
-        'dark': 'light',
-    };
-
     return (
         <div 
             class="appbar"
-            style={{'background-color': Common.colorPalette[settings.theme].appbarBackground}}
+            style={{
+                'background-color': Common.colorPalette[settings.theme].appbarBackground,
+            }}
         >
             <div class="opened">
                 {Object.values(executingApps.apps).map(({app, id}) => (
@@ -43,7 +40,9 @@ export default component$(() => {
 
             <div 
                 class="separator" 
-                style={{border: `1px solid ${Common.colorPalette[invert[settings.theme]].windowBackground}`}}
+                style={{
+                    border: `1px solid ${Common.colorPalette[invertTheme(settings.theme)].windowBackground}`,
+                }}
             >
             </div>
 

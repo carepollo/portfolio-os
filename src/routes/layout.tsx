@@ -1,5 +1,6 @@
 import { Slot, component$, useContext } from '@builder.io/qwik';
 import Bootloading from '~/components/bootloading/bootloading';
+import Modal from '~/components/modal/modal';
 import { SystemContext } from '~/root';
 
 export default component$(() => {
@@ -8,7 +9,14 @@ export default component$(() => {
 
   return (
     <>
-      {machine.loaded ? ( <Slot /> ) : (<Bootloading />)}      
+      {machine.loaded ? (
+        <>
+          <Modal />
+          <Slot />
+        </>
+      ) : (
+        <Bootloading />
+      )}
     </>
   );
 });

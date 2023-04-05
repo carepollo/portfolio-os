@@ -1,7 +1,9 @@
-import { $, component$, useStore, useStylesScoped$ } from "@builder.io/qwik";
+import { $, component$, useContext, useStore, useStylesScoped$ } from "@builder.io/qwik";
 import styles from './view-contact.scss?inline';
 import { PersonalNotification } from "~/models/personal-notification";
 import { notifyMessage } from "~/services/notifications";
+import { GlobalModalContext } from "~/root";
+import { openModal } from "~/services/mutations";
 
 export const triggerSend = (val: PersonalNotification) => {
     return notifyMessage(val);
@@ -22,6 +24,13 @@ export default component$(() => {
             state.message = '';
         });
     });
+
+    const validateEmail = $((email: string) => {
+        const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return pattern.test(email);
+    });
+
+    const modalContext = useContext(GlobalModalContext);
 
     return (
         <>
@@ -58,13 +67,20 @@ export default component$(() => {
                     ></textarea>
                 </div>
 
-                <button type="button" class="submitButton" onClick$={() => {
+                <button type="button" class="submitButton" onClick$={async () => {
                     const { title, message, contact } = state;
-                    if (title !== '' && contact !== '' && message !== '') {
+
+                    const validTitle = title.length > 2;
+                    const validEmail = await validateEmail(contact);
+                    const validMessage = message.length > 2;
+
+                    if (validTitle && validEmail && validMessage) {
                         submit({title, message, contact});
-                        alert('Message sent');
+                        openModal(modalContext, 'Message sent');
                     } else {
-                        alert('You have not filled all fields');
+                        const title = 'Form entry does not meet requirements';
+                        const message = 'Title and message must have be at least 2 characters long and have a valid email addresss';
+                        openModal(modalContext, title, message);
                     }
                 }}>
                     Send
