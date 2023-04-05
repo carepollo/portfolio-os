@@ -54,12 +54,10 @@ export default component$(() => {
                     title="Display desktop" 
                     action={$(() => {
                         const keys = Object.keys(executingApps.apps);
-                        let i = 0;
 
                         for (const key of keys) {
                             executingApps.apps[key].minimized = true;
                             executingApps.apps[key].active = false;
-                            i++;
                         }
                     })}
                 />
