@@ -23,11 +23,12 @@ export default component$(() => {
           <IconAction 
             title={process.app.name}
             name={process.app.icon.name}
-            trigger={'click'}
+            trigger="click"
             action={$(() => {
               const minimization = executingApps.apps[process.id];
               executingApps.apps[process.id].minimized = !minimization.minimized;
 
+              //if it is un-minimizing, set as active app 
               if (!executingApps.apps[process.id].minimized) {
                 const changedActive = setActiveWindow(executingApps.apps, process.id);
                 executingApps.apps = changedActive;

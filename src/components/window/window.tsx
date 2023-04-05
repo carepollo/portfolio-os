@@ -30,8 +30,8 @@ export default component$((props: {id: string}) => {
     const maximize = $(() => {
         const app = appSet.apps[props.id];
         if (!app.maximized) {
-            app.x = Common.defaultWindowPositionX;
-            app.y = Common.defaultWindowPositionY;  
+            app.x = Common.positions.window.x;
+            app.y = Common.positions.window.y;  
             app.maximized = true;
         } else {
             app.maximized = false;

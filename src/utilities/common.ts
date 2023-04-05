@@ -13,8 +13,6 @@ export class Common {
 
     /**
      * the url root location of server/api where to point the requests and server actions
-     * 
-     * **second value is temporary, shall be modified**
      */
     public static readonly serverPath = 'http://34.125.239.168'
 
@@ -22,18 +20,6 @@ export class Common {
      * the url root location of the self app
      */
     public static readonly clientPath = !Common.production ? 'http://localhost:5173' : 'https://portfolio-os-carepollo.vercel.app'
-
-    /**
-     * when opening a new app or after minimizing, the position that must recover
-     * on the x axis
-     */
-    public static readonly defaultWindowPositionX: number = 0;
-    
-    /**
-     * when opening a new app or after minimizing, the position that must recover
-     * on the y axis
-     */
-    public static readonly defaultWindowPositionY: number = 38;
 
     /**
      * the colors and where they are used across the entire app
@@ -55,14 +41,18 @@ export class Common {
         },
     };
 
+    /**
+     * default positions where apps must started when opened or when transferring modes
+     */
     public static readonly positions = {
         window: {
             x: 0,
             y: 38,
         },
         screen: {
-            x: 0,
+            x: 80,
             y: 38,
         },
-    }
+    };
+
 }

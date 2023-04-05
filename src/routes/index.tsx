@@ -14,6 +14,7 @@ import styles from './index.scss?inline';
 import Screen from '~/components/screen/screen';
 import { generateId, startProcess } from '~/services/mutations';
 import IconAction from '~/components/icon-action/icon-action';
+import SideBar from '~/components/side-bar/side-bar';
 
 
 export default component$(() => {
@@ -35,42 +36,52 @@ export default component$(() => {
   // });
 
   return (
-    <>
-      <div class="view">
-        <div class="header">
-          <Header />
-        </div>
-        <div class="body">
-            <div class="desktop">
+    <div class="view">
 
-              {/* this are the icons on desktop */}
-              <section class="layout">
-                {Object.values(disk[desktopAppsLocation]).map(({ app }) => (
-                  <IconAction 
-                    name={app.icon.name} 
-                    title={app.name} 
-                    action={$(() => {
-                      startProcess(executingApps.apps, 'desktop', app.name, settings);
-                    })} 
-                    trigger={settings.mode === 'manual' ? 'click' : 'dblclick'} 
-                    key={generateId()}
-                  />
-                ))}
-              </section>
-
-              {/* this are the opened windows */}
-              {Object.values(executingApps.apps).map(app => !app.minimized ? (
-                settings.mode === 'manual' ?
-                  <Window id={app.id} key={app.id} /> :
-                  <Screen id={app.id} key={app.id} />
-              ): null)}
-            </div>
-            <div class="appbar">
-              <AppBar />
-            </div>
-        </div>
+      <div class="header">
+        <Header />
       </div>
-    </>
+      <div class="body">
+
+        {settings.mode === 'touch' ? 
+          <div class="sidebar">
+            <SideBar />
+          </div> : null
+        }
+
+        <div class="desktop">
+
+          {/* this are the icons on desktop */}
+          <section class="layout">
+            {Object.values(disk[desktopAppsLocation]).map(({ app }) => (
+              <IconAction 
+                name={app.icon.name} 
+                title={app.name} 
+                action={$(() => {
+                  startProcess(executingApps.apps, 'desktop', app.name, settings);
+                })} 
+                trigger={settings.mode === 'manual' ? 'dblclick' : 'click'} 
+                key={generateId()}
+              />
+            ))}
+          </section>
+
+          {/* this are the opened windows */}
+          {Object.values(executingApps.apps).map(app => !app.minimized ? (
+            settings.mode === 'manual' ?
+              <Window id={app.id} key={app.id} /> :
+              <Screen id={app.id} key={app.id} />
+          ) : null)}
+        </div>
+
+      </div>
+
+      {settings.mode === 'manual' ? 
+        <div class="appbar">
+          <AppBar />
+        </div> : null
+      }
+    </div>
   );
 });
 

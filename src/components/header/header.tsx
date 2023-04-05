@@ -37,7 +37,7 @@ export default component$(() => {
   return (
     <header style={{'background-color': Common.colorPalette[settings.theme].headerBackground}}>
       <div>
-        <Icon name={'logo'} size={25} />
+        <Icon name={'lens'} size={25} />
         <span>{settings.currentApp}</span>
       </div>
       <span>{time.value}</span>

@@ -6,12 +6,12 @@ export default component$((props: IconActionProps) => {
 
     const possibleTriggers = {
         'click': (
-            <div onDblClick$={props.action} style={{width: 'fit-content', height: 'fit-content', cursor: 'pointer'}}>
+            <div onClick$={props.action} style={{width: 'fit-content', height: 'fit-content', cursor: 'pointer'}}>
                 <Icon name={props.name} size={props.size} title={props.title} />
             </div>
         ),
         'dblclick': (
-            <div onClick$={props.action} style={{width: 'fit-content', height: 'fit-content', cursor: 'pointer'}}>
+            <div onDblClick$={props.action} style={{width: 'fit-content', height: 'fit-content', cursor: 'pointer'}}>
                 <Icon name={props.name} size={props.size} title={props.title} />
             </div>
         ),

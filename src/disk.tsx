@@ -6,10 +6,11 @@ import ViewContact from './components/view-contact/view-contact';
 import ViewProjects from './components/view-projects/view-projects';
 import ViewSettings from './components/view-settings/view-settings';
 import ViewAbout from './components/view-about/view-about';
+import { PersonalNotification } from './models/personal-notification';
 
 // apps intalled on the system and its respective states
 
-export const disk: Directory<Directory<{app: App; state: unknown}>> = {
+export const disk: Directory<Directory<{app: App; state: {} | PersonalNotification}>> = {
   'desktop': {
     'Introduction': {
       app: {

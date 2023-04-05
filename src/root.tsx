@@ -63,7 +63,7 @@ export default component$(() => {
     if (possibleState && possibleSettings) {
       const storedState: Directory<Process> = JSON.parse(possibleState);
       const storedSettings: OSSettings = JSON.parse(possibleSettings);
-      const { theme, font, wallpaper, currentApp } = storedSettings;
+      const { theme, font, wallpaper, currentApp, mode } = storedSettings;
 
       for (const key of Object.keys(storedState)) {
         const { location, app, state, id, x, y, minimized, maximized, active } = storedState[key];
@@ -86,6 +86,7 @@ export default component$(() => {
       settings.font = font;
       settings.wallpaper = wallpaper;
       settings.currentApp = currentApp;
+      settings.mode = mode;
     }
     else {
       const id = generateId();
@@ -107,7 +108,7 @@ export default component$(() => {
       settings.currentApp = introduction.app.name;
     }
 
-    settings.mode = window.innerWidth > 624 ? 'manual' : 'touch';
+    settings.mode = window.innerWidth > 700 ? 'manual' : 'touch';
     bootingup.loaded = true;
   });
 

@@ -1,6 +1,6 @@
 import { component$, useContext } from "@builder.io/qwik"
 import { IconProps } from "~/models/icon.props";
-import { CurrentSettings, SystemContext } from "~/root";
+import { CurrentSettings } from "~/root";
 
 export default component$((props: IconProps) => {
 

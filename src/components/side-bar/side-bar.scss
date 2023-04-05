@@ -1,0 +1,26 @@
+.appbar {
+    height: calc(100vh - 38px);
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.opened {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0px;
+}
+
+.pinneds {
+    display: flex;
+    align-self: center;
+    padding: 10px 0px;
+}
+
+.separator {
+    width: 80%;
+    height: max-content;
+}

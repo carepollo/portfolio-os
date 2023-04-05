@@ -15,6 +15,8 @@ export default component$((props: {id: string}) => {
         <div style={{
             'background-color': Common.colorPalette[settings.theme].windowBackground,
             'z-index': appSet.apps[props.id].active ? 3 : 2,
+            'top': `${Common.positions.screen.y}px`,
+            'left': `${Common.positions.screen.x}px`,
         }}>
             {appSet.apps[props.id].app.content()}
         </div>

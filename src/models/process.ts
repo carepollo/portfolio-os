@@ -1,9 +1,12 @@
 import { App } from "./app";
+import { PersonalNotification } from "./personal-notification";
+
+type PossibleStates = {} | PersonalNotification;
 
 /**
  * wrapper of an app with data to use when is being executed
  */
-export interface Process<T = unknown> {
+export interface Process {
 
     /**
      * position of window in x axis
@@ -48,7 +51,7 @@ export interface Process<T = unknown> {
     /**
      * data used by app, is specific and different per each case
      */
-    state: T;
+    state: PossibleStates;
 
     /**
      * to determine on which app is the user right now so it can be overlayed over the others
