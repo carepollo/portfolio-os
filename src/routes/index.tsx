@@ -2,7 +2,9 @@ import {
   $,
   component$,
   useContext,
+  useSignal,
   useStylesScoped$,
+  useVisibleTask$,
  } from '@builder.io/qwik';
 import { DocumentHead } from '@builder.io/qwik-city';
 import Window from '~/components/window/window';
@@ -27,13 +29,23 @@ export default component$(() => {
 
   const desktopAppsLocation = 'desktop';
 
-  // useVisibleTask$(async () => {
-  //   await notifyMessage({
-  //     title: 'New visitor',
-  //     message: 'In Portfolio OS',
-  //     contact: '',
-  //   });
-  // });
+  const height = useSignal('');
+
+  useVisibleTask$(async () => {
+    // set calculated value of height and watch for changes to recalculate
+    const getHeight = () => (window.innerHeight - 38) + 'px';
+    
+    height.value = getHeight();
+    window.addEventListener('resize', () => {
+      height.value = getHeight();
+    });
+
+    // await notifyMessage({
+    //   title: 'New visitor',
+    //   message: 'In Portfolio OS',
+    //   contact: '',
+    // });
+  });
 
   return (
     <div class="view">
@@ -41,10 +53,10 @@ export default component$(() => {
       <div class="header">
         <Header />
       </div>
-      <div class="body">
+      <div class="body" style={{height: height.value}}>
 
         {settings.mode === 'touch' ? 
-          <div class="sidebar">
+          <div class="sidebar" style={{height: height.value}}>
             <SideBar />
           </div> : null
         }
@@ -58,7 +70,7 @@ export default component$(() => {
                 name={app.icon.name} 
                 title={app.name} 
                 action={$(() => {
-                  startProcess(executingApps.apps, 'desktop', app.name, settings);
+                  startProcess(executingApps.apps, 'desktop', app.name, settings); //TODO in touch mode prevent app to be opened twice
                 })} 
                 trigger={settings.mode === 'manual' ? 'dblclick' : 'click'} 
                 key={generateId()}

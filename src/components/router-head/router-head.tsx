@@ -17,8 +17,8 @@ export const RouterHead = component$(() => {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="icon" type="image/svg+xml" href="/icons/lens.svg" />
 
-      <meta name="title" content="Portfolio" />
-      <meta name="description" content="Projects, GitHub, Skills" />
+      <meta name="title" content="Portfolio OS" />
+      <meta name="description" content="Personal site to show off projects, skills and professional background" />
       <meta name="author" content="ChickenFace" />
       <meta name="robots" content="index" />
       <meta name="og:image" content="/pictures/halgorithmics.jpg" />
