@@ -14,7 +14,7 @@ import Header from '../components/header/header';
 import AppBar from '~/components/app-bar/app-bar';
 import styles from './index.scss?inline';
 import Screen from '~/components/screen/screen';
-import { generateId, startProcess } from '~/services/mutations';
+import { generateId, setActiveWindow, startProcess } from '~/services/mutations';
 import IconAction from '~/components/icon-action/icon-action';
 import SideBar from '~/components/side-bar/side-bar';
 
@@ -69,8 +69,20 @@ export default component$(() => {
               <IconAction 
                 name={app.icon.name} 
                 title={app.name} 
-                action={$(() => {
-                  startProcess(executingApps.apps, 'desktop', app.name, settings); //TODO in touch mode prevent app to be opened twice
+                action={settings.mode === 'manual' ? $(() => {
+                  startProcess(executingApps.apps, 'desktop', app.name, settings);
+                }) : $(() => {
+                  //search if app is already executed then use that one, otherwise start new process
+                  const existings = Object.values(executingApps.apps);
+                  const found = existings.find(x => x.app.name === app.name);
+                  if (found) {
+                    setActiveWindow(executingApps.apps, found.id);
+                    executingApps.apps[found.id].minimized = false;
+                    settings.currentApp = executingApps.apps[found.id].app.name
+                    return;
+                  }
+
+                  startProcess(executingApps.apps, 'desktop', app.name, settings);
                 })} 
                 trigger={settings.mode === 'manual' ? 'dblclick' : 'click'} 
                 key={generateId()}

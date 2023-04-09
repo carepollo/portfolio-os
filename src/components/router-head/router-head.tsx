@@ -9,20 +9,41 @@ export const RouterHead = component$(() => {
   const head = useDocumentHead();
   const loc = useLocation();
 
+  const title = 'Portfolio OS';
+  const author = 'ChickenFace';
+  const description = `${author} is a software engineer experienced with backend technologies like NestJS, Fiber, Flask, MongoDB, MySQL`;
+  const icon = '/icons/lens.svg';
+  const picture = '/pictures/picture.png';
+
   return (
     <>
       <title>{head.title}</title>
 
       <link rel="canonical" href={loc.url.href} />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="icon" type="image/svg+xml" href="/icons/lens.svg" />
+      <link rel="icon" type="image/svg+xml" href={icon} />
+      <link rel="apple-touch-icon" href={icon} />
+      <meta name="msapplication-TileImage" content={icon} />
 
-      <meta name="title" content="Portfolio OS" />
-      <meta name="description" content="Personal site to show off projects, skills and professional background" />
-      <meta name="author" content="ChickenFace" />
+      <meta name="title" content={title} />
+      <meta name="description" content={description} />
+      <meta name="author" content={author} />
       <meta name="robots" content="index" />
-      <meta name="og:image" content="/pictures/halgorithmics.jpg" />
-      <meta name="og:type" content="website" />
+
+      <meta property="og:image" content={picture} />
+      {/* <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="628" /> */}
+
+      <meta property="og:url" content={loc.url.href} />
+      <meta property="og:site_name" content={author}/>
+      <meta property="og:type" content="website" />
+      <meta property="og:locale" content="en_US" />
+      <meta property="article:modified_time" content="2023-04-01T12:24:06+00:00" />
+      <meta property="og:description" content={description} />
+
+      <meta name="twitter:image" content={picture} />
+      <meta name="twitter:label1" content="Est. reading time" />
+      <meta name="twitter:data1" content="10 minutes" />
 
       {head.meta.map((m) => (
         <meta {...m} key={generateId()} />

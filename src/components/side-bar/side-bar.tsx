@@ -29,8 +29,7 @@ export default component$(() => {
                         action={$(() => {
                             //do not minimize when is already unminimized, only repeat action
                             executingApps.apps[id].minimized = false;
-                            const changedActive = setActiveWindow(executingApps.apps, id);
-                            executingApps.apps = changedActive;
+                            setActiveWindow(executingApps.apps, id);
                             settings.currentApp = executingApps.apps[id].app.name;
                         })}
                         key={id}

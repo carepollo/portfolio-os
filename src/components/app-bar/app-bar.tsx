@@ -31,8 +31,7 @@ export default component$(() => {
 
               //if it is un-minimizing, set as active app 
               if (!executingApps.apps[process.id].minimized) {
-                const changedActive = setActiveWindow(executingApps.apps, process.id);
-                executingApps.apps = changedActive;
+                setActiveWindow(executingApps.apps, process.id);
                 settings.currentApp = executingApps.apps[process.id].app.name;
               }
             })}

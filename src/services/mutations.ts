@@ -15,7 +15,6 @@ import { Common } from "~/utilities/common";
  * @returns modified directory of executing processes with the active window set
  */
 export const setActiveWindow = (datasource: Directory<Process>, id: string) => {
-    const afterClicked: Directory<Process> = {};
     const keys = Object.keys(datasource);
     const processes = Object.values(datasource);
 
@@ -24,11 +23,10 @@ export const setActiveWindow = (datasource: Directory<Process>, id: string) => {
         const id = keys[i];
         
         element.active = false;
-        afterClicked[id] = element;
+        datasource[id] = element;
     }
     
-    afterClicked[id].active = true;
-    return afterClicked;
+    datasource[id].active = true;
 };
 
 /**
@@ -80,8 +78,7 @@ export const startProcess = (context: Directory<Process>, location: string, name
         location,
     };
     context[id] = opened;
-    const updatedWindowContext = setActiveWindow(context, id);
-    context = updatedWindowContext;
+    setActiveWindow(context, id);
     settings.currentApp = context[id].app.name; 
 }
 
@@ -113,3 +110,5 @@ export const openModal = (context: ModalData, title: string, message: string = '
     context.message = message;
     context.title = title;
 }
+
+//close app/process?

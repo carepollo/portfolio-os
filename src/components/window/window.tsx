@@ -42,6 +42,7 @@ export default component$((props: {id: string}) => {
         appSet.apps[props.id].closed = true;
         closed.value = true;
         
+        //TODO: deprecated implementation of removal of apps, can be done through `delete context[id]`
         const replacement = Object.values(appSet.apps).filter(x => x.id !== props.id);
         const replaces: Directory<Process> = {};
         Object.keys(appSet.apps).filter(x => x !== props.id).forEach((keyId, index) => {
@@ -75,8 +76,7 @@ export default component$((props: {id: string}) => {
     });
 
     const setActive = $(() => {
-        const newContext = setActiveWindow(appSet.apps, props.id);
-        appSet.apps = newContext;
+        setActiveWindow(appSet.apps, props.id);
         settings.currentApp = appSet.apps[props.id].app.name;
     });
 
