@@ -31,8 +31,8 @@ export const RouterHead = component$(() => {
       <meta name="robots" content="index" />
 
       <meta property="og:image" content={picture} />
-      {/* <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="628" /> */}
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="628" />
 
       <meta property="og:url" content={loc.url.href} />
       <meta property="og:site_name" content={author}/>
