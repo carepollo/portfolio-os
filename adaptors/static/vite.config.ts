@@ -1,4 +1,4 @@
-import { staticAdaptor } from '@builder.io/qwik-city/adaptors/static/vite';
+import { staticAdapter } from '@builder.io/qwik-city/adapters/static/vite';
 import { extendConfig } from '@builder.io/qwik-city/vite';
 import baseConfig from '../../vite.config';
 
@@ -11,8 +11,8 @@ export default extendConfig(baseConfig, () => {
       },
     },
     plugins: [
-      staticAdaptor({
-        origin: 'https://yoursite.qwik.dev',
+      staticAdapter({
+        origin: 'https://portfolio-os-carepollo.vercel.app',
       }),
     ],
   };

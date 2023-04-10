@@ -33,9 +33,9 @@ export const RouterHead = component$(() => {
       <meta property="og:image" content={picture} />
       <meta property="og:image:alt" content="descriptive picture of the site" />
 
-      <meta name="og:title" content={title} />
+      <meta property="og:title" content={title} />
       <meta property="og:url" content={loc.url.href} />
-      <meta property="og:site_name" content={title} />
+      <meta property="og:site_name" content={author} />
       <meta property="og:type" content="website" />
       <meta property="og:locale" content="en_US" />
       <meta property="article:modified_time" content="2023-04-01T12:24:06+00:00" />

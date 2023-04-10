@@ -1,10 +1,8 @@
-import { $, component$, useContext, useSignal, useStylesScoped$ } from "@builder.io/qwik";
+import { $, component$, useContext, useStylesScoped$ } from "@builder.io/qwik";
 import style from './window.scss?inline';
 import Icon from '~/components/icon/icon';
 import { CurrentSettings, RunningAppsDirectory } from "~/root";
-import { Directory } from "~/models/directory";
 import { Common } from "~/utilities/common";
-import { Process } from "~/models/process";
 import { setActiveWindow } from "~/services/mutations";
 
 export default component$((props: {id: string}) => {
@@ -12,7 +10,6 @@ export default component$((props: {id: string}) => {
 
     const settings = useContext(CurrentSettings);
     const appSet = useContext(RunningAppsDirectory);
-    const closed = useSignal(false);
     
     const drag = $(() => {
         const app = appSet.apps[props.id];
@@ -40,15 +37,7 @@ export default component$((props: {id: string}) => {
 
     const close = $(() => {
         appSet.apps[props.id].closed = true;
-        closed.value = true;
-        
-        //TODO: deprecated implementation of removal of apps, can be done through `delete context[id]`
-        const replacement = Object.values(appSet.apps).filter(x => x.id !== props.id);
-        const replaces: Directory<Process> = {};
-        Object.keys(appSet.apps).filter(x => x !== props.id).forEach((keyId, index) => {
-            replaces[keyId] = replacement[index];
-        });
-        appSet.apps = replaces;
+        delete appSet.apps[props.id];
     });
 
 
@@ -61,7 +50,7 @@ export default component$((props: {id: string}) => {
         }
     });
 
-    const dragging = $((x: number, y: number) => {
+    const move = $((x: number, y: number) => {
         if(appSet.apps[props.id]) {
             if(appSet.apps[props.id].dragging) {
                 const newX = appSet.apps[props.id].x + x;
@@ -82,7 +71,7 @@ export default component$((props: {id: string}) => {
 
     return (        
         <>
-            {closed.value ? null : (
+            {appSet.apps[props.id].closed ? null : (
                 <div 
                     class="window" 
                     style={{
@@ -94,17 +83,17 @@ export default component$((props: {id: string}) => {
                         'z-index': appSet.apps[props.id].active ? 3 : 2,
                     }}
                     onMouseDown$={setActive}
+                    onMouseMove$={(event) => {
+                        move(event.movementX, event.movementY);
+                    }}
+                    onMouseLeave$={() => drop()}
                 >
                     <div class="header"
                         onMouseDown$={drag}
-                        onMouseMove$={(event) => {
-                            dragging(event.movementX, event.movementY);
-                        }}
-                        onMouseUp$={() => drop()}
-                        onMouseLeave$={() => drop()}
                         style={{
                             'background-color': Common.colorPalette[settings.theme].windowBorder,
                         }}
+                        onMouseUp$={() => drop()}
                     >
                         <div class="title">
                             <Icon name={appSet.apps[props.id].app.icon.name} size={20} />
