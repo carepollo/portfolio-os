@@ -32,7 +32,6 @@ export default component$(() => {
   const height = useSignal('');
 
   useVisibleTask$(async () => {
-    // set calculated value of height and watch for changes to recalculate
     const getHeight = () => (window.innerHeight - 38) + 'px';
     
     height.value = getHeight();
