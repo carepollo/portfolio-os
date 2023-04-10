@@ -11,7 +11,7 @@ export const RouterHead = component$(() => {
 
   const title = 'Portfolio OS';
   const author = 'ChickenFace';
-  const description = `${author} is a software engineer experienced with backend technologies like NestJS, Fiber, Flask, MongoDB, MySQL`;
+  const description = `${author} is a Software Engineer experienced with Back-End technologies like NestJS, Fiber, Flask, MongoDB, MySQL`;
   const icon = '/icons/lens.svg';
   const picture = '/pictures/picture.png';
 
@@ -31,19 +31,21 @@ export const RouterHead = component$(() => {
       <meta name="robots" content="index" />
 
       <meta property="og:image" content={picture} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="628" />
+      <meta property="og:image:alt" content="descriptive picture of the site" />
 
+      <meta name="og:title" content={title} />
       <meta property="og:url" content={loc.url.href} />
-      <meta property="og:site_name" content={author}/>
+      <meta property="og:site_name" content={title} />
       <meta property="og:type" content="website" />
       <meta property="og:locale" content="en_US" />
       <meta property="article:modified_time" content="2023-04-01T12:24:06+00:00" />
       <meta property="og:description" content={description} />
 
-      <meta name="twitter:image" content={picture} />
-      <meta name="twitter:label1" content="Est. reading time" />
-      <meta name="twitter:data1" content="10 minutes" />
+      <meta property="twitter:title" content={title} />
+      <meta property="twitter:image" content={picture} />
+      <meta property="twitter:label1" content="Est. reading time" />
+      <meta property="twitter:data1" content="10 minutes" />
+      <meta property="twitter:card" content="summary_large_image" />
 
       {head.meta.map((m) => (
         <meta {...m} key={generateId()} />

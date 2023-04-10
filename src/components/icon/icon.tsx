@@ -12,16 +12,14 @@ export default component$((props: IconProps) => {
   }
   
   return (
-    <>
-      <img 
-        src={`/icons/${props.name}.svg`} 
-        title={props.title}
-        alt="icon" 
-        style={{
-          width: size,
-          height: size,
-        }} 
-      />
-    </>
+    <img 
+      src={`/icons/${props.name}.svg`} 
+      title={props.title}
+      alt="icon" 
+      style={{
+        width: size,
+        height: size,
+      }} 
+    />
   )
 });

@@ -40,7 +40,7 @@ export default component$(() => {
                 <IconAction name="mail" size={20} action={openApp} title="Contact Me" trigger="click" />
                 <IconAnchor name="github" size={20} site="https://github.com/carepollo" />
                 <IconAnchor name="linkedin" size={20} site="https://linkedin.com" />
-                <IconAnchor name="telegram" size={20} site="https://t.me/chickenface" />
+                <IconAnchor name="telegram" size={20} site="https://telegram.org" />
             </div>
         </div>
     );
