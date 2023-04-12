@@ -14,7 +14,7 @@ export class Common {
     /**
      * the url root location of server/api where to point the requests and server actions
      */
-    public static readonly serverPath = 'http://34.125.239.168'
+    public static readonly serverPath = 'https://silent-night-9270.fly.dev'
 
     /**
      * the url root location of the self app

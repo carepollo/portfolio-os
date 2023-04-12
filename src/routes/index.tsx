@@ -17,6 +17,7 @@ import Screen from '~/components/screen/screen';
 import { generateId, setActiveWindow, startProcess } from '~/services/mutations';
 import IconAction from '~/components/icon-action/icon-action';
 import SideBar from '~/components/side-bar/side-bar';
+import { notifyMessage } from '~/services/notifications';
 
 
 export default component$(() => {
@@ -39,11 +40,11 @@ export default component$(() => {
       height.value = getHeight();
     });
 
-    // await notifyMessage({
-    //   title: 'New visitor',
-    //   message: 'In Portfolio OS',
-    //   contact: '',
-    // });
+    await notifyMessage({
+      title: 'New visitor',
+      message: new Date().toString(),
+      contact: 'In Portfolio OS',
+    });
   });
 
   return (
