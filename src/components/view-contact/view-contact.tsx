@@ -2,7 +2,7 @@ import { $, component$, useContext, useStore, useStylesScoped$ } from "@builder.
 import styles from './view-contact.scss?inline';
 import { PersonalNotification } from "~/models/personal-notification";
 import { notifyMessage } from "~/services/notifications";
-import { CurrentSettings, GlobalModalContext } from "~/root";
+import { GlobalModalContext } from "~/root";
 import { openModal } from "~/services/mutations";
 
 export const triggerSend = (val: PersonalNotification) => {
