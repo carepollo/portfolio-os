@@ -35,14 +35,9 @@ export default component$(() => {
                         <p>
                             The bar at the side will show the apps that you are executing.
                         </p>
-                        <img class="bigpicture" src="/pictures/sidebar.png" alt="sidebar executing apps" />
                         <p>
-                            The button <img class="inlineimg" src="/icons/menu.svg" alt="menu icon" /> will display the desktop.
+                            Hold click over an icon on the sidebar to close it.
                         </p>
-                        <p>
-                            To close an app swipe up in the app's screen as shown in the picture.
-                        </p>
-                        <img class="bigpicture" src="/pictures/closeapp.png" alt="instructions to swipe up and close app" />
                     </>
                 )}
             </div>

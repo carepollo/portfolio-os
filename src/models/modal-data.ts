@@ -1,3 +1,6 @@
+import { QRL } from "@builder.io/qwik";
+import { JSX } from "@builder.io/qwik/jsx-runtime";
+
 /**
  * data that a modal requires to function
  */
@@ -10,7 +13,7 @@ export interface ModalData {
     /**
      * message of the modal
      */
-    message: string;
+    message: QRL<() => JSX.Element>;
 
     /**
      * to display/hide the component

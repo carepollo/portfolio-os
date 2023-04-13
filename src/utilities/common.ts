@@ -19,7 +19,7 @@ export class Common {
     /**
      * the url root location of the self app
      */
-    public static readonly clientPath = !Common.production ? 'http://localhost:5173' : 'https://portfolio-os-carepollo.vercel.app'
+    public static readonly clientPath: string = !Common.production ? 'http://localhost:5173' : 'https://portfolio-os-carepollo.vercel.app'
 
     /**
      * the colors and where they are used across the entire app
@@ -31,6 +31,7 @@ export class Common {
             textColor: 'black',
             appbarBackground: '#FFFFFF4D',
             headerBackground: '#FFFFFF99',
+            inputBackground: 'rgb(240, 240, 240)',
         },
         'dark': {
             windowBorder: '#161618',
@@ -38,6 +39,7 @@ export class Common {
             textColor: 'white',
             appbarBackground: '#0000004D',
             headerBackground: '#00000099',
+            inputBackground: 'rgb(155, 155, 155)'
         },
     };
 

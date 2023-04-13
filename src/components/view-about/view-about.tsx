@@ -35,12 +35,11 @@ export default component$(() => {
                     better fit and a better professional.   
                 </p>
             </div>
-            <h3>More about me</h3>
             <div style={{display: 'flex'}}>
-                <IconAction name="mail" size={20} action={openApp} title="Contact Me" trigger="click" />
-                <IconAnchor name="github" size={20} site="https://github.com/carepollo" />
-                <IconAnchor name="linkedin" size={20} site="https://linkedin.com" />
-                <IconAnchor name="telegram" size={20} site="https://telegram.org" />
+                <IconAction name="mail" size={30} action={openApp} title="Contact Me" trigger="click" />
+                <IconAnchor name="github" size={30} site="https://github.com/carepollo" />
+                <IconAnchor name="linkedin" size={30} site="https://linkedin.com" />
+                <IconAnchor name="telegram" size={30} site="https://telegram.org" />
             </div>
         </div>
     );

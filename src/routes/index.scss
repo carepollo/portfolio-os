@@ -28,3 +28,19 @@
         gap: 5px;
     }
 }
+
+.hoverable {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hoverable:hover {
+    border: 1px solid rgb(49, 49, 49);
+    border-radius: 8px;
+    background-color: rgba($color: grey, $alpha: 0.8);
+}
+
+.hoverable:active {
+    background-color: rgba($color: rgb(185, 185, 185), $alpha: 0.8);
+}

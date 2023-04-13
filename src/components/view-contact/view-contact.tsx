@@ -2,7 +2,7 @@ import { $, component$, useContext, useStore, useStylesScoped$ } from "@builder.
 import styles from './view-contact.scss?inline';
 import { PersonalNotification } from "~/models/personal-notification";
 import { notifyMessage } from "~/services/notifications";
-import { GlobalModalContext } from "~/root";
+import { CurrentSettings, GlobalModalContext } from "~/root";
 import { openModal } from "~/services/mutations";
 
 export const triggerSend = (val: PersonalNotification) => {
@@ -30,7 +30,14 @@ export default component$(() => {
         return pattern.test(email);
     });
 
+    const validateText = $((input: string) => {
+        // const pattern = /^(?!\s*[!@#$%^&*()_+\-={}\[\]\\|:;"'<>,.?/`~]+\s*$)(?![',`"])[^\s',`"]+$/; //alternate
+        const pattern = /^(?!.*['"`]).*\S.*$/;
+        return pattern.test(input);
+    });
+
     const modalContext = useContext(GlobalModalContext);
+
 
     return (
         <>
@@ -70,16 +77,27 @@ export default component$(() => {
                 <button type="button" class="submitButton" onClick$={async () => {
                     const { title, message, contact } = state;
 
-                    const validTitle = title.length > 2;
+                    const validTitle = await validateText(title) && title.length > 6;
                     const validEmail = await validateEmail(contact);
-                    const validMessage = message.length > 2;
+                    const validMessage = await validateText(message) && message.length > 20;
 
                     if (validTitle && validEmail && validMessage) {
                         submit({title, message, contact});
-                        openModal(modalContext, 'Message sent');
+                        const optMessage = $(() => <p></p>);
+                        openModal(modalContext, 'Message sent', optMessage);
                     } else {
                         const title = 'Form entry does not meet requirements';
-                        const message = 'Title and message must have be at least 2 characters long and have a valid email addresss';
+                        const message = $(() => <div>
+                            <p>
+                                The form must follow this constrainsts:
+                            </p>
+                            <ul>
+                                <li>title must be at least 6 characters long</li>
+                                <li>message must be at least 20 characters long</li>
+                                <li>message must not contain the characters ', " or `</li>
+                                <li>email address must be syntactically valid</li>
+                            </ul>
+                        </div>)
                         openModal(modalContext, title, message);
                     }
                 }}>

@@ -1,7 +1,8 @@
-import { $, component$, useContext, useSignal, useStylesScoped$ } from "@builder.io/qwik";
+import { component$, useContext, useStylesScoped$ } from "@builder.io/qwik";
 import { CurrentSettings, RunningAppsDirectory } from "~/root";
 import { Common } from "~/utilities/common";
 import styles from './screen.scss?inline';
+import IconAction from "../icon-action/icon-action";
 
 export default component$((props: {id: string}) => {
 
@@ -11,13 +12,6 @@ export default component$((props: {id: string}) => {
 
     const settings = useContext(CurrentSettings);
 
-    const close = $(() => {
-        appSet.apps[props.id].closed = true;
-        delete appSet.apps[props.id];        
-    });
-
-    const startY = useSignal<number | null>(null);
-
     return (
         <div 
             style={{
@@ -26,26 +20,23 @@ export default component$((props: {id: string}) => {
                 'top': `${Common.positions.screen.y}px`,
                 'left': `${Common.positions.screen.x}px`,
             }}
-            onTouchStart$={(event) => {
-                startY.value = event.touches[0].clientY;
-            }}
-            onTouchMove$={(event) => {
-                if (!startY) {
-                    return;
-                }
-            
-                const endY = event.touches[0].clientY;
-                const distance = startY.value! - endY;
-            
-                if (distance > 0 && distance > window.innerHeight * 0.2) {
-                    close().then(() => startY.value = null);
-                }
-            }}
-            onTouchEnd$={() => {
-                startY.value = null;
-            }}
+            class="screen"
         >
-            {appSet.apps[props.id].app.content()}
+            <div class="header">
+                <IconAction 
+                    name="close"
+                    title="close"
+                    size={30}
+                    trigger="click"
+                    action={() => {
+                        appSet.apps[props.id].closed;
+                        delete appSet.apps[props.id];
+                    }}
+                />
+            </div>
+            <div class="body">
+                {appSet.apps[props.id].app.content()}
+            </div>
         </div>
     )
 });

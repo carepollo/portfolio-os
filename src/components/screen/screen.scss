@@ -1,6 +1,18 @@
-div {
-    width: calc(100% - 80px);
+.screen {
+    // width: calc(100% - 80px);
     height: calc(100% - 38px);
     position: absolute;
     overflow: auto;
+    padding: 5px;
+}
+
+.header {
+    height: fit-content;
+    text-align: right;
+
+    img, object {
+        height: 20px;
+        width: 20px;
+        cursor: pointer;
+    }
 }

@@ -35,7 +35,9 @@ export default component$(() => {
                         }}
                     >
                         <h2>{props.title}</h2>
-                        <p>{props.message}</p>
+                        <div>
+                            {props.message()}
+                        </div>
                         <button onClick$={() => props.show = false}>
                             OK
                         </button>

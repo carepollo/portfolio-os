@@ -1,3 +1,5 @@
+import { QRL } from "@builder.io/qwik";
+import { JSX } from "@builder.io/qwik/jsx-runtime";
 import { disk } from "~/disk";
 import { Directory } from "~/models/directory";
 import { ModalData } from "~/models/modal-data";
@@ -105,7 +107,7 @@ export const invertTheme = (theme: string): string => {
  * @param title title, main message
  * @param message long text to show
  */
-export const openModal = (context: ModalData, title: string, message: string = ''): void  => {
+export const openModal = (context: ModalData, title: string, message: QRL<() => JSX.Element>): void  => {
     context.show = true;
     context.message = message;
     context.title = title;

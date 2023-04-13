@@ -18,6 +18,7 @@ import { generateId, setActiveWindow, startProcess } from '~/services/mutations'
 import IconAction from '~/components/icon-action/icon-action';
 import SideBar from '~/components/side-bar/side-bar';
 import { notifyMessage } from '~/services/notifications';
+import { Common } from '~/utilities/common';
 
 
 export default component$(() => {
@@ -40,11 +41,13 @@ export default component$(() => {
       height.value = getHeight();
     });
 
-    await notifyMessage({
-      title: 'New visitor',
-      message: new Date().toString(),
-      contact: 'In Portfolio OS',
-    });
+    if (Common.production) {
+      await notifyMessage({
+        title: 'New visitor',
+        message: new Date().toString(),
+        contact: 'In Portfolio OS',
+      });  
+    }
   });
 
   return (
@@ -66,27 +69,28 @@ export default component$(() => {
           {/* this are the icons on desktop */}
           <section class="layout">
             {Object.values(disk[desktopAppsLocation]).map(({ app }) => (
-              <IconAction 
-                name={app.icon.name} 
-                title={app.name} 
-                action={settings.mode === 'manual' ? $(() => {
-                  startProcess(executingApps.apps, 'desktop', app.name, settings);
-                }) : $(() => {
-                  //search if app is already executed then use that one, otherwise start new process
-                  const existings = Object.values(executingApps.apps);
-                  const found = existings.find(x => x.app.name === app.name);
-                  if (found) {
-                    setActiveWindow(executingApps.apps, found.id);
-                    executingApps.apps[found.id].minimized = false;
-                    settings.currentApp = executingApps.apps[found.id].app.name
-                    return;
-                  }
+              <div class="hoverable" key={generateId()}>
+                <IconAction 
+                  name={app.icon.name} 
+                  title={app.name} 
+                  action={settings.mode === 'manual' ? $(() => {
+                    startProcess(executingApps.apps, 'desktop', app.name, settings);
+                  }) : $(() => {
+                    //search if app is already executed then use that one, otherwise start new process
+                    const existings = Object.values(executingApps.apps);
+                    const found = existings.find(x => x.app.name === app.name);
+                    if (found) {
+                      setActiveWindow(executingApps.apps, found.id);
+                      executingApps.apps[found.id].minimized = false;
+                      settings.currentApp = executingApps.apps[found.id].app.name
+                      return;
+                    }
 
-                  startProcess(executingApps.apps, 'desktop', app.name, settings);
-                })} 
-                trigger={settings.mode === 'manual' ? 'dblclick' : 'click'} 
-                key={generateId()}
-              />
+                    startProcess(executingApps.apps, 'desktop', app.name, settings);
+                  })} 
+                  trigger={settings.mode === 'manual' ? 'dblclick' : 'click'} 
+                />
+              </div>
             ))}
           </section>
 

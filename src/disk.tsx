@@ -1,7 +1,6 @@
 import { $ } from '@builder.io/qwik';
 import { App } from './models/app';
 import { Directory } from './models/directory';
-import ViewIntroduction from './components/view-introduction/view-introduction';
 import ViewContact from './components/view-contact/view-contact';
 import ViewProjects from './components/view-projects/view-projects';
 import ViewSettings from './components/view-settings/view-settings';
@@ -12,16 +11,16 @@ import { PersonalNotification } from './models/personal-notification';
 
 export const disk: Directory<Directory<{app: App; state: {} | PersonalNotification}>> = {
   'desktop': {
-    'Introduction': {
-      app: {
-        name: 'Introduction',
-        icon: {
-          name: 'document',
-        },
-        content: $(() => <ViewIntroduction />),
-      },
-      state: {},
-    },
+    // 'Introduction': {
+    //   app: {
+    //     name: 'Introduction',
+    //     icon: {
+    //       name: 'document',
+    //     },
+    //     content: $(() => <ViewIntroduction />),
+    //   },
+    //   state: {},
+    // },
     'Projects': {
       app: {
         name: 'Projects',
@@ -36,7 +35,7 @@ export const disk: Directory<Directory<{app: App; state: {} | PersonalNotificati
       app: {
         name: 'About Me',
         icon: {
-          name: 'profile',
+          name: 'document',
         },
         content: $(() => <ViewAbout />),
       },

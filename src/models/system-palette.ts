@@ -24,4 +24,9 @@ export interface SystemPalette {
      * background color of system header
      */
     headerBackground: string;
+
+    /**
+     * the background color of inputs
+     */
+    inputBackground: string;
 }

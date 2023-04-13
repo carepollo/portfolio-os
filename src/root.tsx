@@ -1,4 +1,5 @@
 import { 
+  $,
   component$, 
   createContextId, 
   useContextProvider, 
@@ -14,7 +15,6 @@ import { Common } from './utilities/common';
 import { disk } from './disk';
 import { Directory } from './models/directory';
 import { OSSettings } from './models/os-settings';
-import { generateId } from './services/mutations';
 import { Machine } from './models/machine';
 import { ModalData } from './models/modal-data';
 
@@ -49,18 +49,15 @@ export default component$(() => {
 
   const modal = useStore<ModalData>({
     title: '',
-    message: '',
+    message: $(() => <p></p>),
     show: false,
   });
 
   const processes = useStore<ContextProcessesDirectory>({apps: {}}, {deep: true});
 
   useContextProvider(CurrentSettings, settings);
-
   useContextProvider(RunningAppsDirectory, processes);
-
   useContextProvider(SystemContext, bootingup);
-
   useContextProvider(GlobalModalContext, modal);
 
   const storageState = 'portfolioos_state';
@@ -68,23 +65,7 @@ export default component$(() => {
 
   useVisibleTask$(() => {
     const loadDefaultState = () => {
-      const id = generateId();
-      const location = 'desktop';
-      const introduction: Process = {
-        id,
-        app: disk[location]['Introduction'].app,
-        state: disk[location]['Introduction'].state,
-        x: 50,
-        y: 50,
-        minimized: false,
-        maximized: false,
-        dragging: false,
-        closed: false,
-        active: true,
-        location,
-      };
-      processes.apps[id] = introduction;
-      settings.currentApp = introduction.app.name;
+      // do not open anything
     }
 
     const loadStoredData = (possibleState: string, possibleSettings: string) => {
