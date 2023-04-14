@@ -11,4 +11,9 @@ export interface Machine {
      * height of the screen of device in pixels
      */
     screenHeight: number;
+
+    /**
+     * width of the screen of device in pixels
+     */
+    screenWidth: number;
 }

@@ -1,6 +1,4 @@
 .screen {
-    // width: calc(100% - 80px);
-    height: calc(100% - 38px);
     position: absolute;
     overflow: auto;
     padding: 5px;
@@ -10,6 +8,7 @@
     height: fit-content;
     display: flex;
     justify-content: flex-end;
+    padding: 0px 10px;
 
     img, object {
         height: 20px;

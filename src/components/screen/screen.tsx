@@ -1,5 +1,5 @@
 import { $, component$, useContext, useStylesScoped$ } from "@builder.io/qwik";
-import { CurrentSettings, RunningAppsDirectory } from "~/root";
+import { CurrentSettings, RunningAppsDirectory, SystemContext } from "~/root";
 import { Common } from "~/utilities/common";
 import styles from './screen.scss?inline';
 import IconAction from "../icon-action/icon-action";
@@ -12,6 +12,8 @@ export default component$((props: {id: string}) => {
 
     const settings = useContext(CurrentSettings);
 
+    const system = useContext(SystemContext);
+
     return (
         <div 
             style={{
@@ -19,6 +21,8 @@ export default component$((props: {id: string}) => {
                 'z-index': appSet.apps[props.id].active ? 3 : 2,
                 'top': `${Common.positions.screen.y}px`,
                 'left': `${Common.positions.screen.x}px`,
+                'width': `${system.screenWidth - 80}px`,
+                'height': `${system.screenHeight - 38}px`,
             }}
             class="screen"
         >

@@ -3,33 +3,22 @@ import styles from './header.scss?inline';
 import Icon from '../icon/icon';
 import { CurrentSettings } from '~/root';
 import { Common } from '~/utilities/common';
+import { formatTime } from '~/services/mutations';
 
 /**
  * the header on site that says stuff
  */
 export default component$(() => {
 
-  const format = $((date: Date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
-
-    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-    return formattedDate;
-  });
-
   useStylesScoped$(styles);
 
   const settings = useContext(CurrentSettings);
 
-  const time = useSignal<string>();
+  const time = useSignal<string>(formatTime(new Date()));
 
   useVisibleTask$(() => {
-    setInterval(async () => {
-      const result = await format(new Date());
+    setInterval(() => {
+      const result = formatTime(new Date());
       time.value = result;
     }, 500);
   });

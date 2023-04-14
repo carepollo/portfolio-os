@@ -38,6 +38,7 @@ export default component$(() => {
   const bootingup = useStore<Machine>({
     loaded: false,
     screenHeight: 0,
+    screenWidth: 0,
   });
   
   const settings = useStore<OSSettings>({
@@ -109,7 +110,13 @@ export default component$(() => {
 
     settings.mode = window.innerWidth > 700 ? 'manual' : 'touch';
     bootingup.screenHeight = window.innerHeight;
+    bootingup.screenWidth = window.innerWidth;
     bootingup.loaded = true;
+
+    window.addEventListener('resize', async () => {
+      bootingup.screenHeight = window.innerHeight;
+      bootingup.screenWidth = window.innerWidth;
+    });
   });
 
   useVisibleTask$(({ track }) => {

@@ -33,10 +33,6 @@ export default component$(() => {
   const desktopAppsLocation = 'desktop';
 
   useVisibleTask$(async () => {
-    window.addEventListener('resize', async () => {
-      system.screenHeight = window.innerHeight;
-    });
-
     if (Common.production) {
       await notifyMessage({
         title: 'New visitor',
