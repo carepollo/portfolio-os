@@ -37,6 +37,7 @@ export default component$(() => {
 
   const bootingup = useStore<Machine>({
     loaded: false,
+    screenHeight: 0,
   });
   
   const settings = useStore<OSSettings>({
@@ -64,10 +65,6 @@ export default component$(() => {
   const storageSettings = 'portfolioos_settings';
 
   useVisibleTask$(() => {
-    const loadDefaultState = () => {
-      // do not open anything
-    }
-
     const loadStoredData = (possibleState: string, possibleSettings: string) => {
       const storedState: Directory<Process> = JSON.parse(possibleState);
       const storedSettings: OSSettings = JSON.parse(possibleSettings);
@@ -104,14 +101,14 @@ export default component$(() => {
       if (possibleSettings && possibleState) {
         loadStoredData(possibleState, possibleSettings);
       }
-      else {
-        loadDefaultState();
-      }
     } catch (error) {
-      loadDefaultState();
+      localStorage.removeItem(storageState);
+      localStorage.removeItem(storageSettings);
+      processes.apps = {};
     }
 
     settings.mode = window.innerWidth > 700 ? 'manual' : 'touch';
+    bootingup.screenHeight = window.innerHeight;
     bootingup.loaded = true;
   });
 

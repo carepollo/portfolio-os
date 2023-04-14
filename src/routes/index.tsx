@@ -2,23 +2,22 @@ import {
   $,
   component$,
   useContext,
-  useSignal,
   useStylesScoped$,
   useVisibleTask$,
  } from '@builder.io/qwik';
 import { DocumentHead } from '@builder.io/qwik-city';
-import Window from '~/components/window/window';
 import { disk } from '~/disk';
-import { CurrentSettings, RunningAppsDirectory } from '~/root';
+import { CurrentSettings, RunningAppsDirectory, SystemContext } from '~/root';
+import { generateId, setActiveWindow, startProcess } from '~/services/mutations';
+import { notifyMessage } from '~/services/notifications';
+import { Common } from '~/utilities/common';
+import Window from '~/components/window/window';
 import Header from '../components/header/header';
 import AppBar from '~/components/app-bar/app-bar';
 import styles from './index.scss?inline';
 import Screen from '~/components/screen/screen';
-import { generateId, setActiveWindow, startProcess } from '~/services/mutations';
 import IconAction from '~/components/icon-action/icon-action';
 import SideBar from '~/components/side-bar/side-bar';
-import { notifyMessage } from '~/services/notifications';
-import { Common } from '~/utilities/common';
 
 
 export default component$(() => {
@@ -29,23 +28,20 @@ export default component$(() => {
 
   const settings = useContext(CurrentSettings);
 
+  const system = useContext(SystemContext);
+
   const desktopAppsLocation = 'desktop';
 
-  const height = useSignal('');
-
   useVisibleTask$(async () => {
-    const getHeight = () => (window.innerHeight - 38) + 'px';
-    
-    height.value = getHeight();
-    window.addEventListener('resize', () => {
-      height.value = getHeight();
+    window.addEventListener('resize', async () => {
+      system.screenHeight = window.innerHeight;
     });
 
     if (Common.production) {
       await notifyMessage({
         title: 'New visitor',
         message: new Date().toString(),
-        contact: 'In Portfolio OS',
+        contact: `In Portfolio OS - mode ${settings.mode}`,
       });  
     }
   });
@@ -56,10 +52,10 @@ export default component$(() => {
       <div class="header">
         <Header />
       </div>
-      <div class="body" style={{height: height.value}}>
+      <div class="body" style={{height: (system.screenHeight - 38) + 'px'}}>
 
         {settings.mode === 'touch' ? 
-          <div class="sidebar" style={{height: height.value}}>
+          <div class="sidebar" style={{height: (system.screenHeight - 38) + 'px'}}>
             <SideBar />
           </div> : null
         }

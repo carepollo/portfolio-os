@@ -1,4 +1,4 @@
-import { component$, useContext, useStylesScoped$ } from "@builder.io/qwik";
+import { $, component$, useContext, useStylesScoped$ } from "@builder.io/qwik";
 import { CurrentSettings, RunningAppsDirectory } from "~/root";
 import { Common } from "~/utilities/common";
 import styles from './screen.scss?inline';
@@ -28,10 +28,10 @@ export default component$((props: {id: string}) => {
                     title="close"
                     size={30}
                     trigger="click"
-                    action={() => {
+                    action={$(() => {
                         appSet.apps[props.id].closed;
                         delete appSet.apps[props.id];
-                    }}
+                    })}
                 />
             </div>
             <div class="body">
