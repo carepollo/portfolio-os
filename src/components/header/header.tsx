@@ -1,4 +1,4 @@
-import { $, component$, useContext, useSignal, useStylesScoped$, useVisibleTask$ } from '@builder.io/qwik';
+import { component$, useContext, useSignal, useStylesScoped$, useVisibleTask$ } from '@builder.io/qwik';
 import styles from './header.scss?inline';
 import Icon from '../icon/icon';
 import { CurrentSettings } from '~/root';
