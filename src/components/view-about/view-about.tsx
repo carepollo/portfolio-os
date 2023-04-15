@@ -20,8 +20,8 @@ export default component$(() => {
             <h3>About me</h3>
             <div>
                 <p>
-                    I am a software engineering student from Colombia. I constantly look 
-                    for new technologies to learn and improve my professional toolset.
+                    I am a software engineering student from Colombia. I am the kind of person that is
+                    constantly looking for new technologies to learn and ways to improve my professional toolset.
                 </p>
                 <p>
                     My journey in tech started with a course on 2019 about fullstack web development. 

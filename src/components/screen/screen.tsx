@@ -21,7 +21,7 @@ export default component$((props: {id: string}) => {
                 'z-index': appSet.apps[props.id].active ? 3 : 2,
                 'top': `${Common.positions.screen.y}px`,
                 'left': `${Common.positions.screen.x}px`,
-                'width': `${system.screenWidth - 80}px`,
+                'width': `${system.screenWidth - 90}px`,
                 'height': `${system.screenHeight - 38}px`,
             }}
             class="screen"
