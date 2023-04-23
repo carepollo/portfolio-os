@@ -6,21 +6,12 @@ import ViewProjects from './components/view-projects/view-projects';
 import ViewSettings from './components/view-settings/view-settings';
 import ViewAbout from './components/view-about/view-about';
 import { PersonalNotification } from './models/personal-notification';
+import ViewDatingsystem from './components/view-datingsystem/view-datingsystem';
 
 // apps intalled on the system and its respective states
 
 export const disk: Directory<Directory<{app: App; state: {} | PersonalNotification}>> = {
   'desktop': {
-    // 'Introduction': {
-    //   app: {
-    //     name: 'Introduction',
-    //     icon: {
-    //       name: 'document',
-    //     },
-    //     content: $(() => <ViewIntroduction />),
-    //   },
-    //   state: {},
-    // },
     'Projects': {
       app: {
         name: 'Projects',
@@ -67,5 +58,15 @@ export const disk: Directory<Directory<{app: App; state: {} | PersonalNotificati
     },
   },
   'projects': {
+    'dating-system': {
+      app: {
+        icon: {
+          name: 'document',
+        },
+        name: 'dating-system',
+        content: $(() => <ViewDatingsystem />),
+      },
+      state: {},
+    },    
   }
 };

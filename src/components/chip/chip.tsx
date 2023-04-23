@@ -7,8 +7,8 @@ export default component$((props: ChipProps) => {
     useStylesScoped$(style);
 
     return (
-        <span class="chip" style={{'background-color': '#b4bbe4', 'color': 'white'}}>
-            {props.icon ? <Icon name={props.icon.name} size={props.icon.size} /> : null}
+        <span class="chip">
+            {props.icon ? <Icon name={props.icon.name} size={15} /> : null}
             {props.text}
         </span>
     )

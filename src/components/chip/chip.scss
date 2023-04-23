@@ -1,14 +1,15 @@
 .chip {
-    border-radius: 16px;
-    padding: 7px;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: space-between;
-    width: fit-content;
+    background-color: #303f9f;
+    border-radius: 16px;
+    padding: 8px;
+    font-size: 14px;
+    line-height: 1.2;
+    transition: linear 0.1s;
 }
 
 .chip:hover {
-    filter:brightness(0.7);
+    background-color: #3f51b5;
 }
