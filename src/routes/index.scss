@@ -33,6 +33,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+
+    p {
+        color: white;
+        font-weight: bolder;
+        -webkit-text-stroke-color: grey;
+        -webkit-text-stroke-width: 1px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+        margin: 0;
+    }
 }
 
 .hoverable:hover {

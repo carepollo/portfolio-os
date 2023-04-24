@@ -82,6 +82,9 @@ export default component$(() => {
                   })} 
                   trigger={settings.mode === 'manual' ? 'dblclick' : 'click'} 
                 />
+                <p>
+                  {app.name}
+                </p>
               </div>
             ))}
           </section>
