@@ -1,0 +1,110 @@
+### Introduction
+
+The scope of this project is divided in 5 modules
+
+-   Authentication
+    -   A user can create account with email, google or facebook
+    -   A user can authenticate itself to the system by email, google, facebook (depending on the creation method)
+-   Searher
+    -   The system will search profiles by location range
+    -   The system will search profiles by similarity
+    -   The system will search profiles by meaning
+-   Dating Spectrum Settings
+    -   The user can set filter of positional limit when searching users
+    -   The user can set filter by age
+    -   The user can set filter of likes/dislikes
+    -   The user can set filter of what you are looking for (type of relationship)
+    -   The user can set filter of your gender of interest
+    -   The user can set filter of other user tags
+-   Chat
+    -   A user can chat, send messages, video, and audio to another user.
+    -   A user can make a video-call to another user.
+-   Matchmaker
+    -   A user can match through like/dislike of another user's profile.
+    -   A user can send only one message to another, and the other user accepts/rejects it.
+    -   The system matches users by algorithm (similarity or clustering).
+-   Profile
+    -   A user can add a name or pseudonym.
+    -   A user can add demographics (education, religion, age, location, weight, height, occupation).
+    -   A user can add their likes/dislikes.
+    -   A user can choose which demographics they want to be displayed to.
+-   Security
+    -   The system should have a way to verify accounts to prevent malicious accounts.
+-   Payment
+    -   A registered user has a limited number of matches and requested profiles if it's a free account.
+    -   A user can make payments with Monero, PayPal, G-Pay, and credit card.
+-   Stats
+    -   A user can see which demographics they have given like/dislike to on a timeline.
+    -   A user can see which data from their profile other users have viewed, and how long they stayed on their profile on a timeline.
+
+Besides the listed features above, the software should also be able to keep maximum 100.000 concurrent user and is expected to be deployed in cloud services like Azure, CGP or AWS.
+
+### Architechture
+
+#### Overall Architechture
+<img src="/pictures/diagram1.png" style="max-width:100%" alt="high level architechture diagram"/>
+
+The clients will consume the API that will be behind a reverse proxy, in this case NGINX, any request and response will pass through it. The 
+API will use a database as a service like MongoDB Atlas.
+
+- Why choose REST over GraphQL: according to one of their [blogposts](https://www.apollographql.com/blog/graphql/basics/what-is-graphql-introduction/)
+GrahQL was created to reduce over-fetching and under-fetching (better performance), give a better developer experience, among other reasons. 
+Is an approach ideal for microservices or when the application has a huge amount of endpoints. That being said, since this application is not 
+expected to grow more than 50 endpoints **at most** and considering that GraphQL is not as widespread used like the REST architechture and this 
+application is expected to server many kinds of front-end applications the performance losses acceptable.
+- Why Monolith instead of Microservices: microservices are common implemented when looking to facilitate rapid growth, change functionality and
+deploy without affecting the entire application and when the application is expected to keep evolving in complexity and size. Microservices on 
+the other hand are not good option when transaction integrity across an operation is needed and have a higher chance of failure during 
+communication between different services when there is a large amount of services. If we convert each module of the app (mentioned on the introduction)
+into services individually we notice that the amount of services and the complexity of the app itself doesn't make the microservices approach worth
+of the disadvantages under the current circumstances.
+- Why MongoDB: because is a general purpose application with already built-in tools for most of the scenarios needed for the business logic. 
+    - According to the [CAP theorem](https://en.wikipedia.org/wiki/CAP_theorem) we see that MongoDB is [well suited](https://medium.com/system-design-blog/cap-theorem-1455ce5fc0a0) 
+    for consistency and partition-tolerance, which is the best option when it comes to this of application because it depends on location of 
+    the user and it is necessary that all users see the have the same data at the same time to prevent matches conflicts.
+    - The application seeks more read than writes considering the fact that a user will receive from the system users constantly, checking for 
+    existing users, the few writes that could be is at the moment of creating user, user profile feedback, payment features.
+    - Most of the data is not highly related with each other therefore there is no need for relational databases while the schema of 
+    the data _is_ subject to change.
+
+
+### Design
+
+#### Public Endpoints
+- `/auth`: is the actions related to authentication
+- `/user`: to get the user data or data related to itself.
+- `/money`: to send requests of payments
+- `/matches`: to get results of matches or match-related actions.
+
+#### Database Schemas
+<img src="/pictures/diagram2.png" style="max-width:100%" alt="database schemas" />
+
+Some of the schemas are subject to change during the development as I see inconvenients with the current design
+
+- User collection is to store the data of a user
+- Bill collection is to keep record of the service paid by the user, when did start and when it ends.
+- Blacklist is to store references of profiles whose the user have blocked or unmatched with.
+- Interactions is to store the data that users have had with a cetain profile.
+
+#### Matchmaking flow
+
+An example on how it should behave the regular matchmaker
+Case 1
+<img src="/pictures/diagram3.png" style="max-width:100%" alt="case1 like/dislike profiles" />
+
+Case 2
+
+Case 3
+
+
+### Testing
+
+Unit: testing each Go package is gonna have its own test file that will test each function on the package with two scenarios:
+- When given the expected input
+- When given unexpected input
+
+Integration testing: When deploying is expected to implement a pipeline  with github actions or jenkins that will check that deploy 
+was succesfull after integrating the new changes.
+
+### Deployment
+
