@@ -89,12 +89,7 @@ Some of the schemas are subject to change during the development as I see inconv
 #### Matchmaking flow
 
 An example on how it should behave the regular matchmaker
-Case 1
 <img src="/pictures/diagram3.png" style="max-width:100%" alt="case1 like/dislike profiles" />
-
-Case 2
-
-Case 3
 
 
 ### Testing
@@ -107,4 +102,11 @@ Integration testing: When deploying is expected to implement a pipeline  with gi
 was succesfull after integrating the new changes.
 
 ### Deployment
+
+You must have MongoDB already installed, then do the following
+
+- Create a `.env` file with `DB_CONNECTION` variable
+- Run `go build` command
+- Execute the binary
+- Test it out on your browser on port 5000
 
