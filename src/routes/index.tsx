@@ -12,6 +12,8 @@ import { CurrentSettings, RunningAppsDirectory, SystemContext } from '~/root';
 import { generateId, setActiveWindow, startProcess } from '~/services/mutations';
 import { notifyMessage } from '~/services/notifications';
 import { Common } from '~/utilities/common';
+import { Directory } from '~/models/directory';
+import { Position } from '~/models/position';
 import Window from '~/components/window/window';
 import Header from '../components/header/header';
 import AppBar from '~/components/app-bar/app-bar';
@@ -19,8 +21,6 @@ import styles from './index.scss?inline';
 import Screen from '~/components/screen/screen';
 import IconAction from '~/components/icon-action/icon-action';
 import SideBar from '~/components/side-bar/side-bar';
-import { Directory } from '~/models/directory';
-import { Position } from '~/models/position';
 
 
 export default component$(() => {
@@ -36,6 +36,11 @@ export default component$(() => {
   const desktopAppsLocation = 'desktop';
   
   const appsPositions = useStore<Directory<Position>>({});
+
+  appsPositions['a'] = {
+    x: 0,
+    y: 0,
+  };
 
   useVisibleTask$(async () => {
     if (Common.production) {

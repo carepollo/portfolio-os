@@ -1,6 +1,7 @@
 import { component$ } from "@builder.io/qwik";
 import Chip from "../chip/chip";
 import DatingSystemSSD from './datingsystem-ssd.mdx';
+import { generateId } from "~/services/mutations";
 
 export default component$(() => {
 
@@ -22,11 +23,11 @@ export default component$(() => {
                 </p>
                 
                 <span>Technologies used:</span>
-                {techs.map(tech => <Chip text={tech} />)}
+                {techs.map(tech => <Chip text={tech} key={generateId()} />)}
                 
                 <br />
                 <span>Skills applied:</span>
-                {skills.map(skill => <Chip text={skill} />)}
+                {skills.map(skill => <Chip text={skill} key={generateId()} />)}
             </div>
 
             <DatingSystemSSD />

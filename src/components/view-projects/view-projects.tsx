@@ -3,7 +3,7 @@ import styles from './view-projects.scss?inline';
 import { disk } from "~/disk";
 import IconAction from "../icon-action/icon-action";
 import { CurrentSettings, RunningAppsDirectory } from "~/root";
-import { startProcess } from "~/services/mutations";
+import { generateId, startProcess } from "~/services/mutations";
 
 export default component$(() => {
 
@@ -25,6 +25,7 @@ export default component$(() => {
             action={$(() => {
               startProcess(processes.apps, 'projects', app.name, settings);
             })}
+            key={generateId()}
           />
         ))}
       </div>
