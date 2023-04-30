@@ -2,6 +2,7 @@ import {
   $,
   component$,
   useContext,
+  useStore,
   useStylesScoped$,
   useVisibleTask$,
  } from '@builder.io/qwik';
@@ -18,6 +19,8 @@ import styles from './index.scss?inline';
 import Screen from '~/components/screen/screen';
 import IconAction from '~/components/icon-action/icon-action';
 import SideBar from '~/components/side-bar/side-bar';
+import { Directory } from '~/models/directory';
+import { Position } from '~/models/position';
 
 
 export default component$(() => {
@@ -31,6 +34,8 @@ export default component$(() => {
   const system = useContext(SystemContext);
 
   const desktopAppsLocation = 'desktop';
+  
+  const appsPositions = useStore<Directory<Position>>({});
 
   useVisibleTask$(async () => {
     if (Common.production) {
