@@ -58,7 +58,7 @@ export default component$(() => {
 
   const printIcons = $(() => {
     const { window, screen } = Common.positions;
-    let initialX = settings.mode === 'manual' ? window.x : screen.x
+    const initialX = settings.mode === 'manual' ? window.x : screen.x
     let x = initialX;
     let y = window.y;
     let count = 0;
