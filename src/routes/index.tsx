@@ -57,10 +57,18 @@ export default component$(() => {
   });
 
   const printIcons = $(() => {
-    let x = 0;
-    let y = Common.positions.window.y;
+    const { window, screen } = Common.positions;
+    let initialX = settings.mode === 'manual' ? window.x : screen.x
+    let x = initialX;
+    let y = window.y;
     let count = 0;
-    const col = Math.round(system.screenWidth / 95);    
+    let col = Math.round(system.screenWidth / 95);
+
+    if (settings.mode === 'touch') {
+      col = Math.floor((system.screenWidth - screen.x) / 95);
+      console.log(col, system.screenWidth, screen.x);
+      
+    }
 
     Object.values(disk[desktopAppsLocation]).forEach(({ app }) => {
       icons.icons[app.name] = {
@@ -74,8 +82,8 @@ export default component$(() => {
       x += 95;
       count++;
       
-      if (count > col) {
-        x = 0;
+      if (count >= col) {
+        x = initialX;
         y += 93;
       }
     });
