@@ -17,6 +17,7 @@ export default component$(() => {
 
   return (
       <div class="collection">
+        <p>no projects here at the moment lol</p>
         {projects.map(({ app }) => (
           <IconAction 
             name={app.icon.name}

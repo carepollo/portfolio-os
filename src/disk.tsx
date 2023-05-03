@@ -58,12 +58,12 @@ export const disk: Directory<Directory<{app: App; state: {} | PersonalNotificati
     },
   },
   'projects': {
-    // 'dating-system': {
+    // 'Multimodal Dating Matchmaker': {
     //   app: {
     //     icon: {
     //       name: 'document',
     //     },
-    //     name: 'dating-system',
+    //     name: 'Multimodal Dating Matchmaker',
     //     content: $(() => <ViewDatingsystem />),
     //   },
     //   state: {},

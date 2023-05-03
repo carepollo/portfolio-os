@@ -21,6 +21,7 @@ import styles from './index.scss?inline';
 import Screen from '~/components/screen/screen';
 import IconAction from '~/components/icon-action/icon-action';
 import SideBar from '~/components/side-bar/side-bar';
+import { App } from '~/models/app';
 
 
 export default component$(() => {
@@ -34,15 +35,55 @@ export default component$(() => {
   const system = useContext(SystemContext);
 
   const desktopAppsLocation = 'desktop';
+
+  const icons = useStore<{icons: Directory<{app: App; position: Position;}>}>({
+    icons: {},
+  }, {deep: true});
+
+  const drag = $((id: string) => {
+    icons.icons[id].position.dragging = true;
+  });
+
+  const move = $((id: string, x: number, y: number) => {
+    const icon = icons.icons[id].position;
+    if (icon.dragging) {
+      icon.x += x;
+      icon.y += y;
+    }
+  });
+
+  const drop = $((id: string) => {
+    icons.icons[id].position.dragging = false;
+  });
+
+  const printIcons = $(() => {
+    let x = 0;
+    let y = Common.positions.window.y;
+    let count = 0;
+    const col = Math.round(system.screenWidth / 95);    
+
+    Object.values(disk[desktopAppsLocation]).forEach(({ app }) => {
+      icons.icons[app.name] = {
+        app,
+        position: {
+          dragging: false,
+          x,
+          y,
+        }
+      };
+      x += 95;
+      count++;
+      
+      if (count > col) {
+        x = 0;
+        y += 93;
+      }
+    });
+  });
   
-  const appsPositions = useStore<Directory<Position>>({});
-
-  appsPositions['a'] = {
-    x: 0,
-    y: 0,
-  };
-
   useVisibleTask$(async () => {
+    await printIcons();
+
     if (Common.production) {
       await notifyMessage({
         title: 'New visitor',
@@ -70,8 +111,19 @@ export default component$(() => {
 
           {/* this are the icons on desktop */}
           <section class="layout">
-            {Object.values(disk[desktopAppsLocation]).map(({ app }) => (
-              <div class="hoverable" key={generateId()}>
+            {Object.values(icons.icons).map(({ app, position }) => (
+              <div 
+                class="hoverable" 
+                key={generateId()}
+                style={{
+                  top: `${position.y}px`,
+                  left: `${position.x}px`,
+                }}
+                onMouseDown$={() => drag(app.name)}
+                onMouseMove$={(e) => move(app.name, e.movementX, e.movementY)}
+                onMouseUp$={() => drop(app.name)}
+                onMouseLeave$={() => drop(app.name)}
+              >
                 <IconAction 
                   name={app.icon.name} 
                   title={app.name} 

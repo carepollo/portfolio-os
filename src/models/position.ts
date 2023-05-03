@@ -12,4 +12,6 @@ export interface Position {
      * position over the y-axis in pixels
      */
     y: number;
+
+    dragging?: boolean;
 }
