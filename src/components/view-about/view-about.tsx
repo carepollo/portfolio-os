@@ -20,7 +20,7 @@ export default component$(() => {
             <h3>About me</h3>
             <div>
                 <p>
-                    I am a software engineering student from Colombia. I am the kind of person that is
+                    I am a software engineering student from LATAM. I am the kind of person that is
                     constantly looking for new technologies to learn and ways to improve my professional toolset.
                 </p>
                 <p>
