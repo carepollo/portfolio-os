@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /assets/
+Allow: /dist/
+Allow: index.html
+Allow: /build/
+Allow: /dist/build/
+Disallow: /src/
+Disallow: /adaptors/

@@ -1,9 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/web-manifest-combined.json",
-  "name": "qwik-project-name",
-  "short_name": "Welcome to Qwik",
+  "name": "Portfolio 0S" ,
+  "short_name": "portfolio-os",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#fff",
-  "description": "A Qwik project app."
+  "description": "Portfolio and personal site for ChickenFace developer"
 }
