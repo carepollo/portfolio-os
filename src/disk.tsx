@@ -58,15 +58,5 @@ export const disk: Directory<Directory<{app: App; state: {} | PersonalNotificati
     },
   },
   'projects': {
-    // 'Multimodal Dating Matchmaker': {
-    //   app: {
-    //     icon: {
-    //       name: 'document',
-    //     },
-    //     name: 'Multimodal Dating Matchmaker',
-    //     content: $(() => <ViewDatingsystem />),
-    //   },
-    //   state: {},
-    // },    
   }
 };
