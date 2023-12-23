@@ -48,7 +48,7 @@ export default component$(() => {
                         <b>Title</b>
                     </label>
                     <input
-                        onChange$={e => state.title = e.target.value}
+                        onChange$={e => state.title = (e!.target! as any).value}
                         maxLength={50}
                         placeholder="50 chars max"
                     />
@@ -58,7 +58,7 @@ export default component$(() => {
                         <b>Email</b>
                     </label>
                     <input
-                        onChange$={e => state.contact = e.target.value}
+                        onChange$={e => state.contact = (e!.target! as any).value}
                         placeholder="Your email so I can get back to you"
                     />
                 </div>
@@ -69,7 +69,7 @@ export default component$(() => {
                     <textarea 
                         cols={30}
                         rows={10}
-                        onChange$={e => state.message = e.target.value}
+                        onChange$={e => state.message = (e!.target! as any).value}
                         placeholder="Body of the message..."
                     ></textarea>
                 </div>
