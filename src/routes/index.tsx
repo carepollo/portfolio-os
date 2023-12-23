@@ -10,7 +10,6 @@ import { DocumentHead } from '@builder.io/qwik-city';
 import { disk } from '~/disk';
 import { CurrentSettings, RunningAppsDirectory, SystemContext } from '~/root';
 import { generateId, setActiveWindow, startProcess } from '~/services/mutations';
-import { notifyMessage } from '~/services/notifications';
 import { Common } from '~/utilities/common';
 import { Directory } from '~/models/directory';
 import { Position } from '~/models/position';
@@ -91,14 +90,6 @@ export default component$(() => {
   
   useVisibleTask$(async () => {
     await printIcons();
-
-    if (Common.production) {
-      await notifyMessage({
-        title: 'New visitor',
-        message: new Date().toString(),
-        contact: `In Portfolio OS - mode ${settings.mode}`,
-      });  
-    }
   });
 
   return (
